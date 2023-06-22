@@ -15,7 +15,7 @@ function multiply(num1, num2) {
 }
 
 function divide(num1, num2) {
-    return num1 / num2;
+    return (num1 / num2).toFixed(4);
 }
 
 function operate(firstNum, operation, secondNum) {
@@ -35,78 +35,20 @@ const buttons = document.querySelectorAll("button");
 const screen = document.querySelector(".calc-upper-side p");
 let multiplyOrDivide = "";
 let displayValue = "";
+let checkPreviousOperation = displayValue.split(" ").slice(-2);
 let finalAnswer = "";
 
 buttons.forEach((button) => {
     button.addEventListener("click", () => {
         screen.style.color = "black";
-        let checkPreviousOperation = displayValue.split(" ").slice(-2);
+        checkPreviousOperation = displayValue.split(" ").slice(-2);
 
-        if (screen.innerText.includes(" = ")) {
+        if (
+            screen.innerText.includes(" = ") ||
+            screen.innerText === "You can't divide on 0!"
+        ) {
             displayValue = "";
             finalAnswer = "";
-        }
-
-        switch (true) {
-            case button.value === " + ":
-                if (
-                    (checkPreviousOperation[0] === "+" &&
-                        checkPreviousOperation[1] === "") ||
-                    (checkPreviousOperation[0] === "-" &&
-                        checkPreviousOperation[1] === "") ||
-                    (checkPreviousOperation[0] === "*" &&
-                        checkPreviousOperation[1] === "") ||
-                    (checkPreviousOperation[0] === "/" &&
-                        checkPreviousOperation[1] === "")
-                ) {
-                    displayValue = displayValue.slice(0, -3);
-                    break;
-                }
-
-            case button.value === " - ":
-                if (
-                    (checkPreviousOperation[0] === "+" &&
-                        checkPreviousOperation[1] === "") ||
-                    (checkPreviousOperation[0] === "-" &&
-                        checkPreviousOperation[1] === "") ||
-                    (checkPreviousOperation[0] === "*" &&
-                        checkPreviousOperation[1] === "") ||
-                    (checkPreviousOperation[0] === "/" &&
-                        checkPreviousOperation[1] === "")
-                ) {
-                    displayValue = displayValue.slice(0, -3);
-                    break;
-                }
-
-            case button.value === " * ":
-                if (
-                    (checkPreviousOperation[0] === "+" &&
-                        checkPreviousOperation[1] === "") ||
-                    (checkPreviousOperation[0] === "-" &&
-                        checkPreviousOperation[1] === "") ||
-                    (checkPreviousOperation[0] === "*" &&
-                        checkPreviousOperation[1] === "") ||
-                    (checkPreviousOperation[0] === "/" &&
-                        checkPreviousOperation[1] === "")
-                ) {
-                    displayValue = displayValue.slice(0, -3);
-                    break;
-                }
-
-            case button.value === " / ":
-                if (
-                    (checkPreviousOperation[0] === "+" &&
-                        checkPreviousOperation[1] === "") ||
-                    (checkPreviousOperation[0] === "-" &&
-                        checkPreviousOperation[1] === "") ||
-                    (checkPreviousOperation[0] === "*" &&
-                        checkPreviousOperation[1] === "") ||
-                    (checkPreviousOperation[0] === "/" &&
-                        checkPreviousOperation[1] === "")
-                ) {
-                    displayValue = displayValue.slice(0, -3);
-                    break;
-                }
         }
 
         switch (true) {
@@ -197,9 +139,15 @@ buttons.forEach((button) => {
                         operate(+firstNum, operation, +secondNum)
                     );
                 }
-                displayValue = displayValue.join(" ");
-                screen.innerText = finalAnswer + " = " + displayValue;
-                break;
+
+                if (+secondNum !== 0) {
+                    displayValue = displayValue.join(" ");
+                    screen.innerText = finalAnswer + " = " + displayValue;
+                    break;
+                } else if (+secondNum === 0) {
+                    screen.innerText = "You can't divide on 0!";
+                    break;
+                }
 
             case button.value === "clear":
                 screen.innerText = "0123456789+-*/=";
@@ -209,11 +157,68 @@ buttons.forEach((button) => {
                 break;
         }
 
-        if (button.value !== " = " && button.value !== "clear") {
-            finalAnswer = displayValue;
-            displayValue += button.value;
-            finalAnswer += button.value;
-            screen.innerText = displayValue;
+        switch (true) {
+            case displayValue.split("").slice(-3).includes(".") &&
+                displayValue.split(" ")[0].slice(-1) === "." &&
+                (button.value === " + " ||
+                    button.value === " - " ||
+                    button.value === " * " ||
+                    button.value === " / " ||
+                    button.value === "."):
+                break;
+
+            case (displayValue.split("").slice(-3).includes(".") &&
+                button.value === ".") ||
+                (displayValue.split("").slice(-4).slice(-1)[0] === "." &&
+                    (button.value === " + " ||
+                        button.value === " - " ||
+                        button.value === " * " ||
+                        button.value === " / " ||
+                        button.value === ".")):
+                break;
+
+            case checkPreviousOperation[0] === "+" &&
+                checkPreviousOperation[1] === "" &&
+                (button.value === " + " ||
+                    button.value === " - " ||
+                    button.value === " * " ||
+                    button.value === " / " ||
+                    button.value === "."):
+                break;
+
+            case checkPreviousOperation[0] === "-" &&
+                checkPreviousOperation[1] === "" &&
+                (button.value === " + " ||
+                    button.value === " - " ||
+                    button.value === " * " ||
+                    button.value === " / " ||
+                    button.value === "."):
+                break;
+
+            case checkPreviousOperation[0] === "*" &&
+                checkPreviousOperation[1] === "" &&
+                (button.value === " + " ||
+                    button.value === " - " ||
+                    button.value === " * " ||
+                    button.value === " / " ||
+                    button.value === "."):
+                break;
+
+            case checkPreviousOperation[0] === "/" &&
+                checkPreviousOperation[1] === "" &&
+                (button.value === " + " ||
+                    button.value === " - " ||
+                    button.value === " * " ||
+                    button.value === " / " ||
+                    button.value === "."):
+                break;
+
+            case button.value !== " = " && button.value !== "clear":
+                finalAnswer = displayValue;
+                displayValue += button.value;
+                finalAnswer += button.value;
+                screen.innerText = displayValue;
+                break;
         }
     });
 });

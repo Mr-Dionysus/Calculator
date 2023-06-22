@@ -78,3 +78,8 @@ p {
     flex-wrap: wrap;
     justify-content: center;
 }
+
+.calc-operation-buttons button {
+    height: 60px;
+    width: 80px;
+}
