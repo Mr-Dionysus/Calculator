@@ -17,6 +17,7 @@ function multiply(num1, num2) {
 function divide(num1, num2) {
     return num1 / num2;
 }
+
 function operate(firstNum, operation, secondNum) {
     switch (true) {
         case operation === "+":
@@ -39,8 +40,75 @@ let finalAnswer = "";
 buttons.forEach((button) => {
     button.addEventListener("click", () => {
         screen.style.color = "black";
+        let checkPreviousOperation = displayValue.split(" ").slice(-2);
 
         switch (true) {
+            case button.value === " + ":
+                console.log("HM");
+                if (
+                    (checkPreviousOperation[0] === "+" &&
+                        checkPreviousOperation[1] === "") ||
+                    (checkPreviousOperation[0] === "-" &&
+                        checkPreviousOperation[1] === "") ||
+                    (checkPreviousOperation[0] === "*" &&
+                        checkPreviousOperation[1] === "") ||
+                    (checkPreviousOperation[0] === "/" &&
+                        checkPreviousOperation[1] === "")
+                ) {
+                    displayValue = displayValue.slice(0, -3);
+                    break;
+                }
+
+            case button.value === " - ":
+                if (
+                    (checkPreviousOperation[0] === "+" &&
+                        checkPreviousOperation[1] === "") ||
+                    (checkPreviousOperation[0] === "-" &&
+                        checkPreviousOperation[1] === "") ||
+                    (checkPreviousOperation[0] === "*" &&
+                        checkPreviousOperation[1] === "") ||
+                    (checkPreviousOperation[0] === "/" &&
+                        checkPreviousOperation[1] === "")
+                ) {
+                    displayValue = displayValue.slice(0, -3);
+                    break;
+                }
+
+            case button.value === " * ":
+                if (
+                    (checkPreviousOperation[0] === "+" &&
+                        checkPreviousOperation[1] === "") ||
+                    (checkPreviousOperation[0] === "-" &&
+                        checkPreviousOperation[1] === "") ||
+                    (checkPreviousOperation[0] === "*" &&
+                        checkPreviousOperation[1] === "") ||
+                    (checkPreviousOperation[0] === "/" &&
+                        checkPreviousOperation[1] === "")
+                ) {
+                    displayValue = displayValue.slice(0, -3);
+                    break;
+                }
+
+            case button.value === " / ":
+                if (
+                    (checkPreviousOperation[0] === "+" &&
+                        checkPreviousOperation[1] === "") ||
+                    (checkPreviousOperation[0] === "-" &&
+                        checkPreviousOperation[1] === "") ||
+                    (checkPreviousOperation[0] === "*" &&
+                        checkPreviousOperation[1] === "") ||
+                    (checkPreviousOperation[0] === "/" &&
+                        checkPreviousOperation[1] === "")
+                ) {
+                    displayValue = displayValue.slice(0, -3);
+                    break;
+                }
+        }
+
+        switch (true) {
+            // case screen.innerText.includes(" = "):
+            //     console.log(screen.innerText);
+
             case button.value === " = ":
                 displayValue = displayValue.split(" ");
 
@@ -141,6 +209,7 @@ buttons.forEach((button) => {
         }
 
         if (button.value !== " = " && button.value !== "clear") {
+            finalAnswer = displayValue;
             displayValue += button.value;
             finalAnswer += button.value;
             screen.innerText = displayValue;
