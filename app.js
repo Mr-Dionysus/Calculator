@@ -42,9 +42,13 @@ buttons.forEach((button) => {
         screen.style.color = "black";
         let checkPreviousOperation = displayValue.split(" ").slice(-2);
 
+        if (screen.innerText.includes(" = ")) {
+            displayValue = "";
+            finalAnswer = "";
+        }
+
         switch (true) {
             case button.value === " + ":
-                console.log("HM");
                 if (
                     (checkPreviousOperation[0] === "+" &&
                         checkPreviousOperation[1] === "") ||
@@ -106,9 +110,6 @@ buttons.forEach((button) => {
         }
 
         switch (true) {
-            // case screen.innerText.includes(" = "):
-            //     console.log(screen.innerText);
-
             case button.value === " = ":
                 displayValue = displayValue.split(" ");
 
