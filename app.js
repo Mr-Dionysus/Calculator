@@ -19,62 +19,134 @@ function divide(num1, num2) {
 }
 function operate(firstNum, operation, secondNum) {
     switch (true) {
-        case operation === "add":
+        case operation === "+":
             return add(firstNum, secondNum);
-        case operation === "substract":
+        case operation === "-":
             return substract(firstNum, secondNum);
-        case operation === "multiply":
+        case operation === "*":
             return multiply(firstNum, secondNum);
-        case operation === "divide":
+        case operation === "/":
             return divide(firstNum, secondNum);
     }
 }
 
 const buttons = document.querySelectorAll("button");
 const screen = document.querySelector(".calc-upper-side p");
+let multiplyOrDivide = "";
 let displayValue = "";
+let finalAnswer = "";
 
 buttons.forEach((button) => {
     button.addEventListener("click", () => {
         screen.style.color = "black";
 
         switch (true) {
-            case button.value === " + ":
-                operation = "add";
-                break;
-
-            case button.value === " - ":
-                operation = "substract";
-                break;
-
-            case button.value === " * ":
-                operation = "multiply";
-                break;
-
-            case button.value === " / ":
-                operation = "divide";
-                break;
-
             case button.value === " = ":
                 displayValue = displayValue.split(" ");
-                console.log(displayValue);
-                displayValue.push("=");
-                displayValue.push(
-                    operate(+displayValue[0], operation, +displayValue[2])
-                );
+
+                for (let i = 0; i < 100; i++) {
+                    if (
+                        displayValue.indexOf("*") === -1 &&
+                        displayValue.indexOf("/") === -1
+                    ) {
+                        break;
+                    }
+
+                    if (
+                        displayValue.indexOf("/") !== -1 &&
+                        displayValue.indexOf("*") !== -1
+                    ) {
+                        multiplyOrDivide = "*";
+                    } else if (
+                        displayValue.indexOf("*") === -1 &&
+                        displayValue.indexOf("/") !== -1
+                    ) {
+                        multiplyOrDivide = "/";
+                    } else if (
+                        displayValue.indexOf("/") === -1 &&
+                        displayValue.indexOf("*") !== -1
+                    ) {
+                        multiplyOrDivide = "*";
+                    }
+
+                    operation =
+                        displayValue[displayValue.indexOf(multiplyOrDivide)];
+                    firstNum =
+                        displayValue[
+                            displayValue.indexOf(multiplyOrDivide) - 1
+                        ];
+                    secondNum =
+                        displayValue[
+                            displayValue.indexOf(multiplyOrDivide) + 1
+                        ];
+                    displayValue.splice(
+                        displayValue.indexOf(multiplyOrDivide) - 1,
+                        3,
+                        operate(+firstNum, operation, +secondNum)
+                    );
+                }
+
+                for (let i = 0; i < 100; i++) {
+                    if (
+                        displayValue.indexOf("+") === -1 &&
+                        displayValue.indexOf("-") === -1
+                    ) {
+                        break;
+                    }
+
+                    if (
+                        displayValue.indexOf("+") === -1 &&
+                        displayValue.indexOf("-") !== -1
+                    ) {
+                        multiplyOrDivide = "-";
+                    } else if (
+                        displayValue.indexOf("-") === -1 &&
+                        displayValue.indexOf("+") !== -1
+                    ) {
+                        multiplyOrDivide = "+";
+                    } else if (
+                        displayValue.indexOf("-") !== -1 &&
+                        displayValue.indexOf("+") !== -1
+                    ) {
+                        multiplyOrDivide = "+";
+                    }
+
+                    operation =
+                        displayValue[displayValue.indexOf(multiplyOrDivide)];
+                    firstNum =
+                        displayValue[
+                            displayValue.indexOf(multiplyOrDivide) - 1
+                        ];
+                    secondNum =
+                        displayValue[
+                            displayValue.indexOf(multiplyOrDivide) + 1
+                        ];
+                    displayValue.splice(
+                        displayValue.indexOf(multiplyOrDivide) - 1,
+                        3,
+
+                        operate(+firstNum, operation, +secondNum)
+                    );
+                }
                 displayValue = displayValue.join(" ");
-                screen.innerText = displayValue;
+                screen.innerText = finalAnswer + " = " + displayValue;
+                break;
+
+            case button.value === "clear":
+                screen.innerText = "0123456789+-*/=";
+                screen.style.color = "rgba(0, 0, 0, 0.695)";
+                displayValue = "";
+                finalAnswer = "";
+                break;
         }
 
-        if (button.value !== " = ") {
+        if (button.value !== " = " && button.value !== "clear") {
             displayValue += button.value;
+            finalAnswer += button.value;
             screen.innerText = displayValue;
         }
-
-        console.log(displayValue);
     });
 });
 
 const equal = document.querySelector(`button[value=" = "]`);
-console.log(displayValue);
 // equal.addEventListener("click", () => {});
