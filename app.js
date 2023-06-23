@@ -51,7 +51,9 @@ let finalAnswer = "";
 buttons.forEach((button) => {
     button.addEventListener("click", () => {
         screen.style.color = "black";
-        checkPreviousOperation = displayValue.split(" ").slice(-2);
+        if (displayValue.length > 1) {
+            checkPreviousOperation = displayValue.split(" ").slice(-2);
+        }
 
         if (
             screen.innerText.includes(" = ") ||
@@ -61,14 +63,10 @@ buttons.forEach((button) => {
             finalAnswer = "";
         }
 
-        // if (screen.innerText.length === 16) {
-        //     console.log("TEST");
-        //     screen.innerText = "Sorry you wrote too much simbols, try again!";
-        //     displayValue = "";
-        //     finalAnswer = "";
-        // }
-
         switch (true) {
+            case displayValue.length === 1 && button.value === " = ":
+                break;
+
             case screen.innerText ===
                 "Sorry you wrote too much symbols, try again!":
                 screen.innerText = "";
@@ -79,6 +77,23 @@ buttons.forEach((button) => {
                     "Sorry you wrote too much symbols, try again!";
                 displayValue = "";
                 finalAnswer = "";
+                break;
+
+            case button.value === "delete":
+                if (
+                    displayValue.split("").slice(-2)[0] === "+" ||
+                    displayValue.split("").slice(-2)[0] === "-" ||
+                    displayValue.split("").slice(-2)[0] === "*" ||
+                    displayValue.split("").slice(-2)[0] === "/"
+                ) {
+                    displayValue = displayValue.slice(0, -3);
+                    finalAnswer = displayValue;
+                    screen.innerText = displayValue;
+                } else {
+                    displayValue = displayValue.slice(0, -1);
+                    finalAnswer = displayValue;
+                    screen.innerText = displayValue;
+                }
                 break;
 
             case button.value === " = " && displayValue !== "":
@@ -174,12 +189,6 @@ buttons.forEach((button) => {
                     screen.innerText = finalAnswer + " = " + displayValue;
                 }
                 break;
-            // else if (+secondNum === 0) {
-            //     screen.innerText = "You can't divide on 0!";
-            //     secondNum = 1;
-            //     displayValue = "";
-            //     break;
-            // }
 
             case button.value === "clear":
                 screen.innerText = "0123456789+-*/=";
@@ -190,6 +199,9 @@ buttons.forEach((button) => {
         }
 
         switch (true) {
+            case displayValue.length === 1 && button.value === " = ":
+                break;
+
             case displayValue === "" &&
                 (button.value === " + " ||
                     button.value === " - " ||
@@ -261,6 +273,7 @@ buttons.forEach((button) => {
 
             case button.value !== " = " &&
                 button.value !== "clear" &&
+                button.value !== "delete" &&
                 screen.innerText !==
                     "Sorry you wrote too much simbols, try again!":
                 finalAnswer = displayValue;
@@ -271,6 +284,3 @@ buttons.forEach((button) => {
         }
     });
 });
-
-const equal = document.querySelector(`button[value=" = "]`);
-// equal.addEventListener("click", () => {});
