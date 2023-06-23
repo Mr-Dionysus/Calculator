@@ -15,7 +15,11 @@ function multiply(num1, num2) {
 }
 
 function divide(num1, num2) {
-    return (num1 / num2).toFixed(4);
+    if (num1 % num2 === 0) {
+        return num1 / num2;
+    } else {
+        return (num1 / num2).toFixed(4);
+    }
 }
 
 function operate(firstNum, operation, secondNum) {
@@ -52,7 +56,7 @@ buttons.forEach((button) => {
         }
 
         switch (true) {
-            case button.value === " = ":
+            case button.value === " = " && displayValue !== "":
                 displayValue = displayValue.split(" ");
 
                 for (let i = 0; i < 100; i++) {
@@ -158,6 +162,15 @@ buttons.forEach((button) => {
         }
 
         switch (true) {
+            case displayValue === "" &&
+                (button.value === " + " ||
+                    button.value === " - " ||
+                    button.value === " * " ||
+                    button.value === " / " ||
+                    button.value === "." ||
+                    button.value === " = "):
+                break;
+
             case displayValue.split("").slice(-3).includes(".") &&
                 displayValue.split(" ")[0].slice(-1) === "." &&
                 (button.value === " + " ||
