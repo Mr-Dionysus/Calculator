@@ -13,12 +13,13 @@ button {
     width: 100px;
     margin: 1px 10px;
     background: none;
-    transition: background 0.7s;
-    cursor: pointer;
+    cursor: default;
+    transition: background 0.7s, cursor 5s;
 }
 
 button:hover {
     background: rgba(128, 128, 128, 0.241);
+    cursor: pointer;
 }
 
 p {

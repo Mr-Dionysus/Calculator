@@ -15,6 +15,12 @@ function multiply(num1, num2) {
 }
 
 function divide(num1, num2) {
+    if (+num2 === 0) {
+        screen.innerText = "You can't divide on 0!";
+        secondNum = -1;
+        displayValue = "";
+    }
+
     if (num1 % num2 === 0) {
         return num1 / num2;
     } else {
@@ -144,18 +150,20 @@ buttons.forEach((button) => {
                     );
                 }
 
-                if (+secondNum !== 0) {
+                if (+secondNum !== 0 && +secondNum !== -1) {
                     displayValue = displayValue.join(" ");
                     screen.innerText = finalAnswer + " = " + displayValue;
-                    break;
-                } else if (+secondNum === 0) {
-                    screen.innerText = "You can't divide on 0!";
-                    secondNum = -1;
-                    displayValue = "";
-                    break;
                 }
+                break;
+            // else if (+secondNum === 0) {
+            //     screen.innerText = "You can't divide on 0!";
+            //     secondNum = 1;
+            //     displayValue = "";
+            //     break;
+            // }
 
             case button.value === "clear":
+                console.log("TEST");
                 screen.innerText = "0123456789+-*/=";
                 screen.style.color = "rgba(0, 0, 0, 0.695)";
                 displayValue = "";
