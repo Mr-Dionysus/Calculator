@@ -13,7 +13,8 @@ button {
     width: 100px;
     margin: 1px 10px;
     background: none;
-    transition: background 0.8s;
+    transition: background 0.7s;
+    cursor: pointer;
 }
 
 button:hover {
