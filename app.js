@@ -163,7 +163,6 @@ buttons.forEach((button) => {
             // }
 
             case button.value === "clear":
-                console.log("TEST");
                 screen.innerText = "0123456789+-*/=";
                 screen.style.color = "rgba(0, 0, 0, 0.695)";
                 displayValue = "";
@@ -234,6 +233,11 @@ buttons.forEach((button) => {
                     button.value === " * " ||
                     button.value === " / " ||
                     button.value === "."):
+                break;
+
+            case displayValue.split(" ").slice(-1)[0][0] === "0" &&
+                displayValue.split(" ").slice(-1)[0][1] !== "." &&
+                button.value === "0":
                 break;
 
             case button.value !== " = " && button.value !== "clear":
