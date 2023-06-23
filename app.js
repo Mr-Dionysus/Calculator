@@ -1,5 +1,5 @@
-let firstNum = 0;
-let secondNum = 0;
+let firstNum = -1;
+let secondNum = -1;
 let operation = "";
 
 function add(num1, num2) {
@@ -150,6 +150,8 @@ buttons.forEach((button) => {
                     break;
                 } else if (+secondNum === 0) {
                     screen.innerText = "You can't divide on 0!";
+                    secondNum = -1;
+                    displayValue = "";
                     break;
                 }
 
