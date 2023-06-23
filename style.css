@@ -25,6 +25,8 @@ button:hover {
 p {
     font-size: 2em;
     color: rgba(0, 0, 0, 0.695);
+    max-width: 80%;
+    max-height: 80%;
 }
 
 .calculator {
@@ -48,6 +50,7 @@ p {
     display: flex;
     justify-content: center;
     align-items: center;
+    word-wrap: break-word;
 }
 
 .calc-lower-side {

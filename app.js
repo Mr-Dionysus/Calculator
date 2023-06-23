@@ -61,7 +61,26 @@ buttons.forEach((button) => {
             finalAnswer = "";
         }
 
+        // if (screen.innerText.length === 16) {
+        //     console.log("TEST");
+        //     screen.innerText = "Sorry you wrote too much simbols, try again!";
+        //     displayValue = "";
+        //     finalAnswer = "";
+        // }
+
         switch (true) {
+            case screen.innerText ===
+                "Sorry you wrote too much symbols, try again!":
+                screen.innerText = "";
+                break;
+
+            case screen.innerText.length === 182:
+                screen.innerText =
+                    "Sorry you wrote too much symbols, try again!";
+                displayValue = "";
+                finalAnswer = "";
+                break;
+
             case button.value === " = " && displayValue !== "":
                 displayValue = displayValue.split(" ");
 
@@ -240,7 +259,10 @@ buttons.forEach((button) => {
                 button.value === "0":
                 break;
 
-            case button.value !== " = " && button.value !== "clear":
+            case button.value !== " = " &&
+                button.value !== "clear" &&
+                screen.innerText !==
+                    "Sorry you wrote too much simbols, try again!":
                 finalAnswer = displayValue;
                 displayValue += button.value;
                 finalAnswer += button.value;
