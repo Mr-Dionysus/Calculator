@@ -8,7 +8,8 @@ body {
 button {
     font-size: 1.7em;
     font-weight: bold;
-    border: 2px solid gray;
+    border: 2px solid rgba(0, 0, 0, 0.261);
+    color: rgba(0, 0, 0, 0.7);
     border-radius: 50%;
     height: 80px;
     width: 80px;
@@ -19,7 +20,7 @@ button {
 }
 
 button:hover {
-    background: rgba(128, 128, 128, 0.5);
+    background: rgba(0, 0, 0, 0.2);
     cursor: pointer;
 }
 
@@ -72,7 +73,7 @@ button[value=" % "]:hover {
     height: 800px;
     width: 600px;
     box-sizing: border-box;
-    border: 1px solid black;
+    border: 2px solid rgba(0, 0, 0, 0.261);
     display: flex;
     flex-direction: column;
     border-radius: 50px;
@@ -83,7 +84,6 @@ button[value=" % "]:hover {
     height: 400px;
     width: 600px;
     padding: 10px;
-    border: 1px solid black;
     border-top-right-radius: 50px;
     border-top-left-radius: 50px;
     display: flex;
@@ -99,18 +99,29 @@ button[value=" % "]:hover {
     justify-content: space-evenly;
     height: 400px;
     width: 600px;
-    padding: 20px 0px;
-    border: 1px solid black;
+    padding: 20px 10px;
     border-bottom-right-radius: 50px;
     border-bottom-left-radius: 50px;
 }
 
-.calc-operation-buttons button {
-    height: 50px;
-    width: 100px;
+.info {
+    margin-left: 30px;
+    height: 800px;
+    width: 400px;
+    font-size: 1.5em;
+    color: rgba(0, 0, 0, 0.695);
+    word-wrap: break-word;
 }
 
-/* @media (max-width: 800px) {
+span {
+    font-weight: bold;
+}
+
+@media (max-width: 1020px) {
+    .info {
+        display: none;
+    }
+
     .calculator {
         height: 600px;
         width: 400px;
@@ -126,16 +137,6 @@ button[value=" % "]:hover {
         width: 400px;
     }
 
-    .calc-num-buttons {
-        height: 300px;
-        width: 250px;
-    }
-
-    .calc-operation-buttons {
-        height: 300px;
-        width: 150px;
-    }
-
     .calc-operation-buttons button {
         height: 40px;
         width: 80px;
@@ -143,9 +144,11 @@ button[value=" % "]:hover {
 
     button {
         font-size: 1.2em;
-        border: 1px solid gray;
-        border-radius: 10px;
-        height: 60px;
-        width: 50px;
+        height: 55px;
+        width: 55px;
     }
-} */
+
+    p {
+        font-size: 1.2em;
+    }
+}
