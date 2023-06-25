@@ -72,6 +72,7 @@ buttons.forEach((button) => {
             case screen.innerText ===
                 "Sorry you wrote too much symbols, try again!":
                 screen.innerText = "";
+                console.log("TEST");
                 break;
 
             case screen.innerText.length === 182:
@@ -279,7 +280,7 @@ buttons.forEach((button) => {
                 button.value !== "clear" &&
                 button.value !== "delete" &&
                 screen.innerText !==
-                    "Sorry you wrote too much simbols, try again!":
+                    "Sorry you wrote too much symbols, try again!":
                 finalAnswer = displayValue;
                 displayValue += button.value;
                 finalAnswer += button.value;
