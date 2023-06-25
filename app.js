@@ -49,7 +49,10 @@ let finalAnswer = "";
 
 buttons.forEach((button) => {
     button.addEventListener("click", () => {
-        screen.style.color = "black";
+        if (screen.innerText !== "0123456789+-*/=") {
+            screen.style.color = "black";
+        }
+
         if (displayValue.length > 1) {
             lastOperator = displayValue.split(" ").slice(-2);
         }
@@ -81,25 +84,36 @@ buttons.forEach((button) => {
             case button.value === "delete":
                 operator = displayValue.split("").slice(-2)[0];
 
-                if (
-                    operator === "+" ||
-                    operator === "-" ||
-                    operator === "*" ||
-                    operator === "/"
-                ) {
-                    displayValue = displayValue.slice(0, -3);
-                    finalAnswer = displayValue;
-                    screen.innerText = displayValue;
-                } else {
-                    displayValue = displayValue.slice(0, -1);
-                    finalAnswer = displayValue;
-                    screen.innerText = displayValue;
+                switch (true) {
+                    case displayValue.length === 1:
+                        displayValue = displayValue.slice(0, -1);
+                        screen.innerText = "0123456789+-*/=";
+                        finalAnswer = "0123456789+-*/=";
+                        screen.style.color = "rgba(0, 0, 0, 0.695)";
+                        break;
+
+                    case operator === "+" ||
+                        operator === "-" ||
+                        operator === "*" ||
+                        operator === "/":
+                        displayValue = displayValue.slice(0, -3);
+                        finalAnswer = displayValue;
+                        screen.innerText = displayValue;
+                        break;
+
+                    case displayValue.length !== 0:
+                        displayValue = displayValue.slice(0, -1);
+                        finalAnswer = displayValue;
+                        screen.innerText = displayValue;
+                        break;
                 }
 
                 lastOperator[0] = "";
                 break;
 
-            case button.value === " = " && displayValue !== "":
+            case button.value === " = " &&
+                displayValue !== "" &&
+                displayValue.split(" ").slice(-1)[0] !== "":
                 displayValue = displayValue.split(" ");
 
                 for (let i = 0; i < 100; i++) {
@@ -275,6 +289,6 @@ buttons.forEach((button) => {
     });
 
     button.addEventListener("keydown", () => {
-        console.log("HEH");
+        console.log("Test");
     });
 });
