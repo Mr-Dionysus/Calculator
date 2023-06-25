@@ -18,7 +18,7 @@ function divide(num1, num2) {
     if (+num2 === 0) {
         screen.innerText = "You can't divide on 0!";
         num2 = -1;
-        displayValue = "";
+        answer = "";
     }
 
     if (num1 % num2 === 0) {
@@ -43,9 +43,9 @@ function operate(num1, operator, num2) {
 
 const buttons = document.querySelectorAll("button");
 const screen = document.querySelector(".calc-upper-side p");
-let displayValue = "";
-let lastOperator = displayValue.split(" ").slice(-2);
-let finalAnswer = "";
+let answer = "";
+let lastOperator = answer.split(" ").slice(-2);
+let textBeforeEqual = "";
 
 buttons.forEach((button) => {
     button.addEventListener("click", () => {
@@ -53,43 +53,42 @@ buttons.forEach((button) => {
             screen.style.color = "black";
         }
 
-        if (displayValue.length > 1) {
-            lastOperator = displayValue.split(" ").slice(-2);
+        if (answer.length > 1) {
+            lastOperator = answer.split(" ").slice(-2);
         }
 
         if (
             screen.innerText.includes(" = ") ||
             screen.innerText === "You can't divide on 0!"
         ) {
-            displayValue = "";
-            finalAnswer = "";
+            answer = "";
+            textBeforeEqual = "";
         }
 
         switch (true) {
-            case displayValue.length === 1 && button.value === " = ":
+            case answer.length === 1 && button.value === " = ":
                 break;
 
             case screen.innerText ===
                 "Sorry you wrote too much symbols, try again!":
                 screen.innerText = "";
-                console.log("TEST");
                 break;
 
             case screen.innerText.length === 182:
                 screen.innerText =
                     "Sorry you wrote too much symbols, try again!";
-                displayValue = "";
-                finalAnswer = "";
+                answer = "";
+                textBeforeEqual = "";
                 break;
 
             case button.value === "delete":
-                operator = displayValue.split("").slice(-2)[0];
+                operator = answer.split("").slice(-2)[0];
 
                 switch (true) {
-                    case displayValue.length === 1:
-                        displayValue = displayValue.slice(0, -1);
+                    case answer.length === 1:
+                        answer = answer.slice(0, -1);
                         screen.innerText = "0123456789+-*/=";
-                        finalAnswer = "0123456789+-*/=";
+                        textBeforeEqual = "0123456789+-*/=";
                         screen.style.color = "rgba(0, 0, 0, 0.695)";
                         break;
 
@@ -97,15 +96,15 @@ buttons.forEach((button) => {
                         operator === "-" ||
                         operator === "*" ||
                         operator === "/":
-                        displayValue = displayValue.slice(0, -3);
-                        finalAnswer = displayValue;
-                        screen.innerText = displayValue;
+                        answer = answer.slice(0, -3);
+                        textBeforeEqual = answer;
+                        screen.innerText = answer;
                         break;
 
-                    case displayValue.length !== 0:
-                        displayValue = displayValue.slice(0, -1);
-                        finalAnswer = displayValue;
-                        screen.innerText = displayValue;
+                    case answer.length !== 0:
+                        answer = answer.slice(0, -1);
+                        textBeforeEqual = answer;
+                        screen.innerText = answer;
                         break;
                 }
 
@@ -113,39 +112,39 @@ buttons.forEach((button) => {
                 break;
 
             case button.value === " = " &&
-                displayValue !== "" &&
-                displayValue.split(" ").slice(-1)[0] !== "":
-                displayValue = displayValue.split(" ");
+                answer !== "" &&
+                answer.split(" ").slice(-1)[0] !== "":
+                answer = answer.split(" ");
 
                 for (let i = 0; i < 100; i++) {
                     if (
-                        displayValue.indexOf("*") === -1 &&
-                        displayValue.indexOf("/") === -1
+                        answer.indexOf("*") === -1 &&
+                        answer.indexOf("/") === -1
                     ) {
                         break;
                     }
 
                     if (
-                        displayValue.indexOf("/") !== -1 &&
-                        displayValue.indexOf("*") !== -1
+                        answer.indexOf("/") !== -1 &&
+                        answer.indexOf("*") !== -1
                     ) {
                         operator = "*";
                     } else if (
-                        displayValue.indexOf("*") === -1 &&
-                        displayValue.indexOf("/") !== -1
+                        answer.indexOf("*") === -1 &&
+                        answer.indexOf("/") !== -1
                     ) {
                         operator = "/";
                     } else if (
-                        displayValue.indexOf("/") === -1 &&
-                        displayValue.indexOf("*") !== -1
+                        answer.indexOf("/") === -1 &&
+                        answer.indexOf("*") !== -1
                     ) {
                         operator = "*";
                     }
 
-                    num1 = displayValue[displayValue.indexOf(operator) - 1];
-                    num2 = displayValue[displayValue.indexOf(operator) + 1];
-                    displayValue.splice(
-                        displayValue.indexOf(operator) - 1,
+                    num1 = answer[answer.indexOf(operator) - 1];
+                    num2 = answer[answer.indexOf(operator) + 1];
+                    answer.splice(
+                        answer.indexOf(operator) - 1,
                         3,
                         operate(+num1, operator, +num2)
                     );
@@ -153,57 +152,57 @@ buttons.forEach((button) => {
 
                 for (let i = 0; i < 100; i++) {
                     if (
-                        displayValue.indexOf("+") === -1 &&
-                        displayValue.indexOf("-") === -1
+                        answer.indexOf("+") === -1 &&
+                        answer.indexOf("-") === -1
                     ) {
                         break;
                     }
 
                     if (
-                        displayValue.indexOf("+") === -1 &&
-                        displayValue.indexOf("-") !== -1
+                        answer.indexOf("+") === -1 &&
+                        answer.indexOf("-") !== -1
                     ) {
                         operator = "-";
                     } else if (
-                        displayValue.indexOf("-") === -1 &&
-                        displayValue.indexOf("+") !== -1
+                        answer.indexOf("-") === -1 &&
+                        answer.indexOf("+") !== -1
                     ) {
                         operator = "+";
                     } else if (
-                        displayValue.indexOf("-") !== -1 &&
-                        displayValue.indexOf("+") !== -1
+                        answer.indexOf("-") !== -1 &&
+                        answer.indexOf("+") !== -1
                     ) {
                         operator = "+";
                     }
 
-                    num1 = displayValue[displayValue.indexOf(operator) - 1];
-                    num2 = displayValue[displayValue.indexOf(operator) + 1];
-                    displayValue.splice(
-                        displayValue.indexOf(operator) - 1,
+                    num1 = answer[answer.indexOf(operator) - 1];
+                    num2 = answer[answer.indexOf(operator) + 1];
+                    answer.splice(
+                        answer.indexOf(operator) - 1,
                         3,
                         operate(+num1, operator, +num2)
                     );
                 }
 
                 if (+num2 !== 0 && +num2 !== -1) {
-                    displayValue = displayValue.join(" ");
-                    screen.innerText = finalAnswer + " = " + displayValue;
+                    answer = answer.join(" ");
+                    screen.innerText = textBeforeEqual + " = " + answer;
                 }
                 break;
 
             case button.value === "clear":
                 screen.innerText = "0123456789+-*/=";
                 screen.style.color = "rgba(0, 0, 0, 0.695)";
-                displayValue = "";
-                finalAnswer = "";
+                answer = "";
+                textBeforeEqual = "";
                 break;
         }
 
         switch (true) {
-            case displayValue.length === 1 && button.value === " = ":
+            case answer.length === 1 && button.value === " = ":
                 break;
 
-            case displayValue === "" &&
+            case answer === "" &&
                 (button.value === " + " ||
                     button.value === " - " ||
                     button.value === " * " ||
@@ -212,9 +211,9 @@ buttons.forEach((button) => {
                     button.value === " = "):
                 break;
 
-            case displayValue.length > 1 &&
-                displayValue.split("").slice(-3).includes(".") &&
-                displayValue.split(" ")[0].slice(-1) === "." &&
+            case answer.length > 1 &&
+                answer.split("").slice(-3).includes(".") &&
+                answer.split(" ")[0].slice(-1) === "." &&
                 (button.value === " + " ||
                     button.value === " - " ||
                     button.value === " * " ||
@@ -222,11 +221,11 @@ buttons.forEach((button) => {
                     button.value === "."):
                 break;
 
-            case (displayValue.length > 1 &&
-                displayValue.split("").slice(-3).includes(".") &&
+            case (answer.length > 1 &&
+                answer.split("").slice(-3).includes(".") &&
                 button.value === ".") ||
-                (displayValue.length > 1 &&
-                    displayValue.split("").slice(-4).slice(-1)[0] === "." &&
+                (answer.length > 1 &&
+                    answer.split("").slice(-4).slice(-1)[0] === "." &&
                     (button.value === " + " ||
                         button.value === " - " ||
                         button.value === " * " ||
@@ -270,9 +269,9 @@ buttons.forEach((button) => {
                     button.value === "."):
                 break;
 
-            case displayValue.length > 1 &&
-                displayValue.split(" ").slice(-1)[0][0] === "0" &&
-                displayValue.split(" ").slice(-1)[0][1] !== "." &&
+            case answer.length > 1 &&
+                answer.split(" ").slice(-1)[0][0] === "0" &&
+                answer.split(" ").slice(-1)[0][1] !== "." &&
                 button.value === "0":
                 break;
 
@@ -281,15 +280,11 @@ buttons.forEach((button) => {
                 button.value !== "delete" &&
                 screen.innerText !==
                     "Sorry you wrote too much symbols, try again!":
-                finalAnswer = displayValue;
-                displayValue += button.value;
-                finalAnswer += button.value;
-                screen.innerText = displayValue;
+                textBeforeEqual = answer;
+                answer += button.value;
+                textBeforeEqual += button.value;
+                screen.innerText = answer;
                 break;
         }
-    });
-
-    button.addEventListener("keydown", () => {
-        console.log("Test");
     });
 });
