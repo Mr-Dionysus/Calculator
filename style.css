@@ -7,7 +7,8 @@ body {
 
 button {
     font-size: 1.7em;
-    border: 1px solid gray;
+    font-weight: bold;
+    border: 2px solid gray;
     border-radius: 50%;
     height: 80px;
     width: 80px;
@@ -18,7 +19,7 @@ button {
 }
 
 button:hover {
-    background: rgba(128, 128, 128, 0.241);
+    background: rgba(128, 128, 128, 0.5);
     cursor: pointer;
 }
 
@@ -29,6 +30,40 @@ p {
     max-height: 80%;
 }
 
+img {
+    height: 80px;
+    width: 196.66666667px;
+    margin: 1px 10px;
+    border-radius: 35px;
+    object-fit: cover;
+}
+
+button[value="clear"],
+button[value="delete"] {
+    color: #e63946;
+    border: 2px #e63946 solid;
+}
+
+button[value="clear"]:hover,
+button[value="delete"]:hover {
+    background: #e6394750;
+}
+
+button[value=" + "],
+button[value=" - "],
+button[value=" * "],
+button[value=" / "] {
+    color: #55a630;
+    border: 2px #55a630 solid;
+}
+
+button[value=" + "]:hover,
+button[value=" - "]:hover,
+button[value=" * "]:hover,
+button[value=" / "]:hover {
+    background: #55a63050;
+}
+
 .calculator {
     height: 800px;
     width: 600px;
@@ -36,7 +71,7 @@ p {
     border: 1px solid black;
     display: flex;
     flex-direction: column;
-    border-radius: 15px;
+    border-radius: 50px;
 }
 
 .calc-upper-side {
@@ -45,8 +80,8 @@ p {
     width: 600px;
     padding: 10px;
     border: 1px solid black;
-    border-top-right-radius: 15px;
-    border-top-left-radius: 15px;
+    border-top-right-radius: 50px;
+    border-top-left-radius: 50px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -62,20 +97,8 @@ p {
     width: 600px;
     padding: 20px 0px;
     border: 1px solid black;
-    border-bottom-right-radius: 15px;
-    border-bottom-left-radius: 15px;
-}
-
-.calc-lower-side button:nth-child(16) {
-    margin: 1px 36.66666667px 1px 26.66666667px;
-}
-
-.calc-lower-side button:nth-child(17) {
-    margin: 1px 36.66666667px 1px 0px;
-}
-
-.calc-lower-side button:nth-child(18) {
-    margin: 1px auto 1px 0px;
+    border-bottom-right-radius: 50px;
+    border-bottom-left-radius: 50px;
 }
 
 .calc-operation-buttons button {
@@ -83,7 +106,7 @@ p {
     width: 100px;
 }
 
-@media (max-width: 800px) {
+/* @media (max-width: 800px) {
     .calculator {
         height: 600px;
         width: 400px;
@@ -121,4 +144,4 @@ p {
         height: 60px;
         width: 50px;
     }
-}
+} */

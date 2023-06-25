@@ -287,4 +287,86 @@ buttons.forEach((button) => {
                 break;
         }
     });
+
+    window.addEventListener("keydown", (e) => {
+        switch (true) {
+            case e.code === "Digit0" && button.value === "0":
+                button.click();
+                break;
+
+            case e.code === "Digit1" && button.value === "1":
+                button.click();
+                break;
+
+            case e.code === "Digit2" && button.value === "2":
+                button.click();
+                break;
+
+            case e.code === "Digit3" && button.value === "3":
+                button.click();
+                break;
+
+            case e.code === "Digit4" && button.value === "4":
+                button.click();
+                break;
+
+            case e.code === "Digit5" && button.value === "5":
+                button.click();
+                break;
+
+            case e.code === "Digit6" && button.value === "6":
+                button.click();
+                break;
+
+            case e.code === "Digit7" && button.value === "7":
+                button.click();
+                break;
+
+            case e.code === "Digit8" && button.value === "8":
+                button.click();
+                break;
+
+            case e.code === "Digit9" && button.value === "9":
+                button.click();
+                break;
+
+            case e.code === "Period" && button.value === ".":
+                button.click();
+                break;
+
+            case e.code === "Equal" && button.value === " = ":
+                button.click();
+                break;
+
+            case e.ctrlKey === true &&
+                e.code === "Backspace" &&
+                button.value === "clear":
+                button.click();
+                break;
+
+            case e.code === "Backspace" && button.value === "delete":
+                button.click();
+                break;
+
+            case e.shiftKey === true &&
+                e.code === "Equal" &&
+                button.value === " + ":
+                button.click();
+                break;
+
+            case e.code === "Minus" && button.value === " - ":
+                button.click();
+                break;
+
+            case e.shiftKey === true &&
+                e.code === "Digit8" &&
+                button.value === " * ":
+                button.click();
+                break;
+
+            case e.code === "Slash" && button.value === " / ":
+                button.click();
+                break;
+        }
+    });
 });
