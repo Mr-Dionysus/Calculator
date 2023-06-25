@@ -1,6 +1,6 @@
-let firstNum = -1;
-let secondNum = -1;
-let operation = "";
+let num1 = -1;
+let num2 = -1;
+let operator = "";
 
 function add(num1, num2) {
     return num1 + num2;
@@ -17,7 +17,7 @@ function multiply(num1, num2) {
 function divide(num1, num2) {
     if (+num2 === 0) {
         screen.innerText = "You can't divide on 0!";
-        secondNum = -1;
+        num2 = -1;
         displayValue = "";
     }
 
@@ -28,31 +28,30 @@ function divide(num1, num2) {
     }
 }
 
-function operate(firstNum, operation, secondNum) {
+function operate(num1, operator, num2) {
     switch (true) {
-        case operation === "+":
-            return add(firstNum, secondNum);
-        case operation === "-":
-            return substract(firstNum, secondNum);
-        case operation === "*":
-            return multiply(firstNum, secondNum);
-        case operation === "/":
-            return divide(firstNum, secondNum);
+        case operator === "+":
+            return add(num1, num2);
+        case operator === "-":
+            return substract(num1, num2);
+        case operator === "*":
+            return multiply(num1, num2);
+        case operator === "/":
+            return divide(num1, num2);
     }
 }
 
 const buttons = document.querySelectorAll("button");
 const screen = document.querySelector(".calc-upper-side p");
-let multiplyOrDivide = "";
 let displayValue = "";
-let checkPreviousOperation = displayValue.split(" ").slice(-2);
+let lastOperator = displayValue.split(" ").slice(-2);
 let finalAnswer = "";
 
 buttons.forEach((button) => {
     button.addEventListener("click", () => {
         screen.style.color = "black";
         if (displayValue.length > 1) {
-            checkPreviousOperation = displayValue.split(" ").slice(-2);
+            lastOperator = displayValue.split(" ").slice(-2);
         }
 
         if (
@@ -80,11 +79,13 @@ buttons.forEach((button) => {
                 break;
 
             case button.value === "delete":
+                operator = displayValue.split("").slice(-2)[0];
+
                 if (
-                    displayValue.split("").slice(-2)[0] === "+" ||
-                    displayValue.split("").slice(-2)[0] === "-" ||
-                    displayValue.split("").slice(-2)[0] === "*" ||
-                    displayValue.split("").slice(-2)[0] === "/"
+                    operator === "+" ||
+                    operator === "-" ||
+                    operator === "*" ||
+                    operator === "/"
                 ) {
                     displayValue = displayValue.slice(0, -3);
                     finalAnswer = displayValue;
@@ -94,6 +95,8 @@ buttons.forEach((button) => {
                     finalAnswer = displayValue;
                     screen.innerText = displayValue;
                 }
+
+                lastOperator[0] = "";
                 break;
 
             case button.value === " = " && displayValue !== "":
@@ -111,33 +114,25 @@ buttons.forEach((button) => {
                         displayValue.indexOf("/") !== -1 &&
                         displayValue.indexOf("*") !== -1
                     ) {
-                        multiplyOrDivide = "*";
+                        operator = "*";
                     } else if (
                         displayValue.indexOf("*") === -1 &&
                         displayValue.indexOf("/") !== -1
                     ) {
-                        multiplyOrDivide = "/";
+                        operator = "/";
                     } else if (
                         displayValue.indexOf("/") === -1 &&
                         displayValue.indexOf("*") !== -1
                     ) {
-                        multiplyOrDivide = "*";
+                        operator = "*";
                     }
 
-                    operation =
-                        displayValue[displayValue.indexOf(multiplyOrDivide)];
-                    firstNum =
-                        displayValue[
-                            displayValue.indexOf(multiplyOrDivide) - 1
-                        ];
-                    secondNum =
-                        displayValue[
-                            displayValue.indexOf(multiplyOrDivide) + 1
-                        ];
+                    num1 = displayValue[displayValue.indexOf(operator) - 1];
+                    num2 = displayValue[displayValue.indexOf(operator) + 1];
                     displayValue.splice(
-                        displayValue.indexOf(multiplyOrDivide) - 1,
+                        displayValue.indexOf(operator) - 1,
                         3,
-                        operate(+firstNum, operation, +secondNum)
+                        operate(+num1, operator, +num2)
                     );
                 }
 
@@ -153,38 +148,29 @@ buttons.forEach((button) => {
                         displayValue.indexOf("+") === -1 &&
                         displayValue.indexOf("-") !== -1
                     ) {
-                        multiplyOrDivide = "-";
+                        operator = "-";
                     } else if (
                         displayValue.indexOf("-") === -1 &&
                         displayValue.indexOf("+") !== -1
                     ) {
-                        multiplyOrDivide = "+";
+                        operator = "+";
                     } else if (
                         displayValue.indexOf("-") !== -1 &&
                         displayValue.indexOf("+") !== -1
                     ) {
-                        multiplyOrDivide = "+";
+                        operator = "+";
                     }
 
-                    operation =
-                        displayValue[displayValue.indexOf(multiplyOrDivide)];
-                    firstNum =
-                        displayValue[
-                            displayValue.indexOf(multiplyOrDivide) - 1
-                        ];
-                    secondNum =
-                        displayValue[
-                            displayValue.indexOf(multiplyOrDivide) + 1
-                        ];
+                    num1 = displayValue[displayValue.indexOf(operator) - 1];
+                    num2 = displayValue[displayValue.indexOf(operator) + 1];
                     displayValue.splice(
-                        displayValue.indexOf(multiplyOrDivide) - 1,
+                        displayValue.indexOf(operator) - 1,
                         3,
-
-                        operate(+firstNum, operation, +secondNum)
+                        operate(+num1, operator, +num2)
                     );
                 }
 
-                if (+secondNum !== 0 && +secondNum !== -1) {
+                if (+num2 !== 0 && +num2 !== -1) {
                     displayValue = displayValue.join(" ");
                     screen.innerText = finalAnswer + " = " + displayValue;
                 }
@@ -233,8 +219,8 @@ buttons.forEach((button) => {
                         button.value === ".")):
                 break;
 
-            case checkPreviousOperation[0] === "+" &&
-                checkPreviousOperation[1] === "" &&
+            case lastOperator[0] === "+" &&
+                lastOperator[1] === "" &&
                 (button.value === " + " ||
                     button.value === " - " ||
                     button.value === " * " ||
@@ -242,8 +228,8 @@ buttons.forEach((button) => {
                     button.value === "."):
                 break;
 
-            case checkPreviousOperation[0] === "-" &&
-                checkPreviousOperation[1] === "" &&
+            case lastOperator[0] === "-" &&
+                lastOperator[1] === "" &&
                 (button.value === " + " ||
                     button.value === " - " ||
                     button.value === " * " ||
@@ -251,8 +237,8 @@ buttons.forEach((button) => {
                     button.value === "."):
                 break;
 
-            case checkPreviousOperation[0] === "*" &&
-                checkPreviousOperation[1] === "" &&
+            case lastOperator[0] === "*" &&
+                lastOperator[1] === "" &&
                 (button.value === " + " ||
                     button.value === " - " ||
                     button.value === " * " ||
@@ -260,8 +246,8 @@ buttons.forEach((button) => {
                     button.value === "."):
                 break;
 
-            case checkPreviousOperation[0] === "/" &&
-                checkPreviousOperation[1] === "" &&
+            case lastOperator[0] === "/" &&
+                lastOperator[1] === "" &&
                 (button.value === " + " ||
                     button.value === " - " ||
                     button.value === " * " ||
@@ -286,5 +272,9 @@ buttons.forEach((button) => {
                 screen.innerText = displayValue;
                 break;
         }
+    });
+
+    button.addEventListener("keydown", () => {
+        console.log("HEH");
     });
 });
