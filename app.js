@@ -91,7 +91,7 @@ buttons.forEach((button) => {
                 screen.innerText = "";
                 break;
 
-            case screen.innerText.length === 182:
+            case screen.innerText.length === 161:
                 screen.innerText =
                     "Sorry you wrote too much symbols, try again!";
                 answer = "";
