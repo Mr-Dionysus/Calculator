@@ -51,16 +51,20 @@ button[value="delete"]:hover {
 
 button[value=" + "],
 button[value=" - "],
-button[value=" * "],
-button[value=" / "] {
+button[value=" × "],
+button[value=" ÷ "],
+button[value=" ^ "],
+button[value=" % "] {
     color: #55a630;
     border: 2px #55a630 solid;
 }
 
 button[value=" + "]:hover,
 button[value=" - "]:hover,
-button[value=" * "]:hover,
-button[value=" / "]:hover {
+button[value=" × "]:hover,
+button[value=" ÷ "]:hover,
+button[value=" ^ "]:hover,
+button[value=" % "]:hover {
     background: #55a63050;
 }
 

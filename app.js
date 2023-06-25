@@ -1,5 +1,5 @@
-let num1 = -1;
-let num2 = -1;
+let num1 = false;
+let num2 = false;
 let operator = "";
 
 function add(num1, num2) {
@@ -28,16 +28,33 @@ function divide(num1, num2) {
     }
 }
 
+function power(num1, num2) {
+    return Math.pow(num1, num2);
+}
+
+function modular(num1, num2) {
+    return num1 % num2;
+}
+
 function operate(num1, operator, num2) {
     switch (true) {
         case operator === "+":
             return add(num1, num2);
+
         case operator === "-":
             return substract(num1, num2);
-        case operator === "*":
+
+        case operator === "×":
             return multiply(num1, num2);
-        case operator === "/":
+
+        case operator === "÷":
             return divide(num1, num2);
+
+        case operator === "^":
+            return power(num1, num2);
+
+        case operator === "%":
+            return modular(num1, num2);
     }
 }
 
@@ -49,7 +66,7 @@ let textBeforeEqual = "";
 
 buttons.forEach((button) => {
     button.addEventListener("click", () => {
-        if (screen.innerText !== "0123456789+-*/=") {
+        if (screen.innerText !== "0123456789+-×÷=") {
             screen.style.color = "black";
         }
 
@@ -87,15 +104,17 @@ buttons.forEach((button) => {
                 switch (true) {
                     case answer.length === 1:
                         answer = answer.slice(0, -1);
-                        screen.innerText = "0123456789+-*/=";
-                        textBeforeEqual = "0123456789+-*/=";
+                        screen.innerText = "0123456789+-×÷=";
+                        textBeforeEqual = "0123456789+-×÷=";
                         screen.style.color = "rgba(0, 0, 0, 0.695)";
                         break;
 
                     case operator === "+" ||
                         operator === "-" ||
-                        operator === "*" ||
-                        operator === "/":
+                        operator === "×" ||
+                        operator === "÷" ||
+                        operator === "^" ||
+                        operator === "%":
                         answer = answer.slice(0, -3);
                         textBeforeEqual = answer;
                         screen.innerText = answer;
@@ -117,28 +136,79 @@ buttons.forEach((button) => {
                 answer = answer.split(" ");
 
                 for (let i = 0; i < 100; i++) {
+                    if (answer.indexOf("^") === -1) {
+                        break;
+                    }
+
+                    if (answer.indexOf("^") !== -1) {
+                        operator = "^";
+                    }
+
+                    num1 = answer[answer.indexOf(operator) - 1];
+                    num2 = answer[answer.indexOf(operator) + 1];
+                    answer.splice(
+                        answer.indexOf(operator) - 1,
+                        3,
+                        operate(+num1, operator, +num2)
+                    );
+                }
+
+                for (let i = 0; i < 100; i++) {
                     if (
-                        answer.indexOf("*") === -1 &&
-                        answer.indexOf("/") === -1
+                        answer.indexOf("×") === -1 &&
+                        answer.indexOf("÷") === -1 &&
+                        answer.indexOf("%") === -1
                     ) {
                         break;
                     }
 
-                    if (
-                        answer.indexOf("/") !== -1 &&
-                        answer.indexOf("*") !== -1
-                    ) {
-                        operator = "*";
-                    } else if (
-                        answer.indexOf("*") === -1 &&
-                        answer.indexOf("/") !== -1
-                    ) {
-                        operator = "/";
-                    } else if (
-                        answer.indexOf("/") === -1 &&
-                        answer.indexOf("*") !== -1
-                    ) {
-                        operator = "*";
+                    switch (true) {
+                        case answer.indexOf("÷") !== -1 &&
+                            answer.indexOf("×") !== -1 &&
+                            answer.indexOf("%") !== -1:
+                            operator = "×";
+                            break;
+
+                        case answer.indexOf("×") === -1 &&
+                            answer.indexOf("÷") !== -1 &&
+                            answer.indexOf("%") !== -1:
+                            operator = "÷";
+                            break;
+
+                        case answer.indexOf("÷") === -1 &&
+                            answer.indexOf("×") !== -1 &&
+                            answer.indexOf("%") !== -1:
+                            operator = "%";
+                            break;
+
+                        case answer.indexOf("÷") !== -1 &&
+                            answer.indexOf("×") !== -1 &&
+                            answer.indexOf("%") === -1:
+                            operator = "×";
+                            break;
+
+                        case answer.indexOf("÷") === -1 &&
+                            answer.indexOf("×") === -1 &&
+                            answer.indexOf("%") !== -1:
+                            operator = "%";
+                            break;
+
+                        case answer.indexOf("÷") !== -1 &&
+                            answer.indexOf("×") === -1 &&
+                            answer.indexOf("%") === -1:
+                            operator = "÷";
+                            break;
+
+                        case answer.indexOf("÷") === -1 &&
+                            answer.indexOf("×") !== -1 &&
+                            answer.indexOf("%") === -1:
+                            operator = "×";
+                            break;
+
+                        case answer.indexOf("×") === -1 &&
+                            answer.indexOf("÷") === -1 &&
+                            answer.indexOf("%") === -1:
+                            break;
                     }
 
                     num1 = answer[answer.indexOf(operator) - 1];
@@ -184,14 +254,14 @@ buttons.forEach((button) => {
                     );
                 }
 
-                if (+num2 !== 0 && +num2 !== -1) {
+                if (+num2 !== 0 && +num2 !== false) {
                     answer = answer.join(" ");
                     screen.innerText = textBeforeEqual + " = " + answer;
                 }
                 break;
 
             case button.value === "clear":
-                screen.innerText = "0123456789+-*/=";
+                screen.innerText = "0123456789+-×÷=";
                 screen.style.color = "rgba(0, 0, 0, 0.695)";
                 answer = "";
                 textBeforeEqual = "";
@@ -205,8 +275,10 @@ buttons.forEach((button) => {
             case answer === "" &&
                 (button.value === " + " ||
                     button.value === " - " ||
-                    button.value === " * " ||
-                    button.value === " / " ||
+                    button.value === " × " ||
+                    button.value === " ÷ " ||
+                    button.value === " ^ " ||
+                    button.value === " % " ||
                     button.value === "." ||
                     button.value === " = "):
                 break;
@@ -216,8 +288,10 @@ buttons.forEach((button) => {
                 answer.split(" ")[0].slice(-1) === "." &&
                 (button.value === " + " ||
                     button.value === " - " ||
-                    button.value === " * " ||
-                    button.value === " / " ||
+                    button.value === " × " ||
+                    button.value === " ÷ " ||
+                    button.value === " ^ " ||
+                    button.value === " % " ||
                     button.value === "."):
                 break;
 
@@ -228,8 +302,10 @@ buttons.forEach((button) => {
                     answer.split("").slice(-4).slice(-1)[0] === "." &&
                     (button.value === " + " ||
                         button.value === " - " ||
-                        button.value === " * " ||
-                        button.value === " / " ||
+                        button.value === " × " ||
+                        button.value === " ÷ " ||
+                        button.value === " ^ " ||
+                        button.value === " % " ||
                         button.value === ".")):
                 break;
 
@@ -237,8 +313,10 @@ buttons.forEach((button) => {
                 lastOperator[1] === "" &&
                 (button.value === " + " ||
                     button.value === " - " ||
-                    button.value === " * " ||
-                    button.value === " / " ||
+                    button.value === " × " ||
+                    button.value === " ÷ " ||
+                    button.value === " ^ " ||
+                    button.value === " % " ||
                     button.value === "."):
                 break;
 
@@ -246,26 +324,54 @@ buttons.forEach((button) => {
                 lastOperator[1] === "" &&
                 (button.value === " + " ||
                     button.value === " - " ||
-                    button.value === " * " ||
-                    button.value === " / " ||
+                    button.value === " × " ||
+                    button.value === " ÷ " ||
+                    button.value === " ^ " ||
+                    button.value === " % " ||
                     button.value === "."):
                 break;
 
-            case lastOperator[0] === "*" &&
+            case lastOperator[0] === "×" &&
                 lastOperator[1] === "" &&
                 (button.value === " + " ||
                     button.value === " - " ||
-                    button.value === " * " ||
-                    button.value === " / " ||
+                    button.value === " × " ||
+                    button.value === " ÷ " ||
+                    button.value === " ^ " ||
+                    button.value === " % " ||
                     button.value === "."):
                 break;
 
-            case lastOperator[0] === "/" &&
+            case lastOperator[0] === "÷" &&
                 lastOperator[1] === "" &&
                 (button.value === " + " ||
                     button.value === " - " ||
-                    button.value === " * " ||
-                    button.value === " / " ||
+                    button.value === " × " ||
+                    button.value === " ÷ " ||
+                    button.value === " ^ " ||
+                    button.value === " % " ||
+                    button.value === "."):
+                break;
+
+            case lastOperator[0] === "^" &&
+                lastOperator[1] === "" &&
+                (button.value === " + " ||
+                    button.value === " - " ||
+                    button.value === " × " ||
+                    button.value === " ÷ " ||
+                    button.value === " ^ " ||
+                    button.value === " % " ||
+                    button.value === "."):
+                break;
+
+            case lastOperator[0] === "%" &&
+                lastOperator[1] === "" &&
+                (button.value === " + " ||
+                    button.value === " - " ||
+                    button.value === " × " ||
+                    button.value === " ÷ " ||
+                    button.value === " ^ " ||
+                    button.value === " % " ||
                     button.value === "."):
                 break;
 
@@ -310,11 +416,15 @@ buttons.forEach((button) => {
                 button.click();
                 break;
 
-            case e.code === "Digit5" && button.value === "5":
+            case e.code === "Digit5" &&
+                button.value === "5" &&
+                e.shiftKey === false:
                 button.click();
                 break;
 
-            case e.code === "Digit6" && button.value === "6":
+            case e.code === "Digit6" &&
+                button.value === "6" &&
+                e.shiftKey === false:
                 button.click();
                 break;
 
@@ -322,7 +432,9 @@ buttons.forEach((button) => {
                 button.click();
                 break;
 
-            case e.code === "Digit8" && button.value === "8":
+            case e.code === "Digit8" &&
+                button.value === "8" &&
+                e.shiftKey === false:
                 button.click();
                 break;
 
@@ -334,7 +446,7 @@ buttons.forEach((button) => {
                 button.click();
                 break;
 
-            case e.code === "Equal" && button.value === " = ":
+            case e.code === "Enter" && button.value === " = ":
                 button.click();
                 break;
 
@@ -348,9 +460,7 @@ buttons.forEach((button) => {
                 button.click();
                 break;
 
-            case e.shiftKey === true &&
-                e.code === "Equal" &&
-                button.value === " + ":
+            case e.code === "Equal" && button.value === " + ":
                 button.click();
                 break;
 
@@ -360,11 +470,23 @@ buttons.forEach((button) => {
 
             case e.shiftKey === true &&
                 e.code === "Digit8" &&
-                button.value === " * ":
+                button.value === " × ":
                 button.click();
                 break;
 
-            case e.code === "Slash" && button.value === " / ":
+            case e.code === "Slash" && button.value === " ÷ ":
+                button.click();
+                break;
+
+            case e.shiftKey === true &&
+                e.code === "Digit6" &&
+                button.value === " ^ ":
+                button.click();
+                break;
+
+            case e.shiftKey === true &&
+                e.code === "Digit5" &&
+                button.value === " % ":
                 button.click();
                 break;
         }
