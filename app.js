@@ -211,7 +211,8 @@ buttons.forEach((button) => {
                     button.value === " = "):
                 break;
 
-            case displayValue.split("").slice(-3).includes(".") &&
+            case displayValue.length > 1 &&
+                displayValue.split("").slice(-3).includes(".") &&
                 displayValue.split(" ")[0].slice(-1) === "." &&
                 (button.value === " + " ||
                     button.value === " - " ||
@@ -220,9 +221,11 @@ buttons.forEach((button) => {
                     button.value === "."):
                 break;
 
-            case (displayValue.split("").slice(-3).includes(".") &&
+            case (displayValue.length > 1 &&
+                displayValue.split("").slice(-3).includes(".") &&
                 button.value === ".") ||
-                (displayValue.split("").slice(-4).slice(-1)[0] === "." &&
+                (displayValue.length > 1 &&
+                    displayValue.split("").slice(-4).slice(-1)[0] === "." &&
                     (button.value === " + " ||
                         button.value === " - " ||
                         button.value === " * " ||
@@ -266,7 +269,8 @@ buttons.forEach((button) => {
                     button.value === "."):
                 break;
 
-            case displayValue.split(" ").slice(-1)[0][0] === "0" &&
+            case displayValue.length > 1 &&
+                displayValue.split(" ").slice(-1)[0][0] === "0" &&
                 displayValue.split(" ").slice(-1)[0][1] !== "." &&
                 button.value === "0":
                 break;
