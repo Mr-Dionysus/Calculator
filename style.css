@@ -7,17 +7,37 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
+    flex-direction: column;
+}
+
+.main-content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    flex-wrap: wrap;
+}
+
+footer {
+    margin-top: auto;
+    display: flex;
+}
+
+small {
+    width: 100%;
+    align-items: center;
+    justify-content: center;
 }
 
 button {
     font-size: 1.7em;
     font-weight: bold;
-    border: 2px solid #0077b6;
+    border: 3px solid #0077b6;
     color: #0077b6;
     border-radius: 50%;
-    height: 80px;
-    width: 80px;
-    margin: 1px 10px;
+    height: 85px;
+    width: 85px;
+    margin: 5px;
     background: white;
     cursor: default;
     transition: background 0.7s, cursor 5s;
@@ -26,34 +46,25 @@ button {
 button:hover {
     background: rgba(0, 0, 0, 0.2);
     cursor: pointer;
-    animation: pop 0.2s linear 1;
 }
 
 @keyframes pop {
     50% {
-        transform: scale(1.05);
+        transform: scale(1.1);
     }
 }
 
 p {
     font-size: 2em;
-    color: rgba(0, 0, 0, 0.695);
+    color: rgba(0, 0, 0, 0.5);
     max-width: 80%;
     max-height: 80%;
-}
-
-img {
-    height: 80px;
-    width: 196.66666667px;
-    margin: 1px 10px;
-    border-radius: 35px;
-    object-fit: cover;
 }
 
 button[value="clear"],
 button[value="delete"] {
     color: #e63946;
-    border: 2px #e63946 solid;
+    border: 3px #e63946 solid;
 }
 
 button[value="clear"]:hover,
@@ -68,7 +79,7 @@ button[value=" ÷ "],
 button[value=" ^ "],
 button[value=" % "] {
     color: #55a630;
-    border: 2px #55a630 solid;
+    border: 3px #55a630 solid;
 }
 
 button[value=" + "]:hover,
@@ -82,7 +93,7 @@ button[value=" % "]:hover {
 
 .calculator {
     height: 800px;
-    width: 524px;
+    width: 624px;
     box-sizing: border-box;
     border: 2px solid rgba(0, 0, 0, 0.261);
     display: flex;
@@ -94,14 +105,28 @@ button[value=" % "]:hover {
 .calc-upper-side {
     box-sizing: border-box;
     height: 400px;
-    width: 520px;
+    width: 621.771px;
     padding: 10px;
     display: flex;
-    justify-content: center;
+    flex-direction: row-reverse;
     align-items: center;
     word-wrap: break-word;
     background: rgb(255, 255, 255);
     border-radius: 50px;
+}
+
+.screen-info {
+    width: 621.771px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    word-wrap: break-word;
+}
+
+.screen-info p {
+    text-align: center;
+    width: 590px;
+    margin: 0px;
 }
 
 .calc-lower-side {
@@ -110,8 +135,8 @@ button[value=" % "]:hover {
     flex-wrap: wrap;
     justify-content: space-evenly;
     height: 400px;
-    width: 520px;
-    padding: 20px 10px;
+    width: 621.771px;
+    padding: 5px;
 }
 
 .info {
@@ -123,8 +148,63 @@ button[value=" % "]:hover {
     word-wrap: break-word;
 }
 
+.animation {
+    animation: pop 0.1s linear 1;
+}
+
 span {
     font-weight: bold;
+}
+
+svg {
+    height: 30px;
+    width: 30px;
+    transition: background 0.5s;
+    border-radius: 50%;
+    background: white;
+    position: absolute;
+}
+
+.dropdown {
+    width: 30px;
+    position: absolute;
+    display: flex;
+    justify-content: end;
+    margin: 40px 10px 400px 0px;
+}
+
+.dropdown-info li {
+    padding: 5px;
+}
+
+.dropdown-info li:hover {
+    background-color: white;
+}
+
+.dropdown-info {
+    font-size: 1.4em;
+    margin-top: 40px;
+    visibility: hidden;
+    opacity: 0;
+    position: absolute;
+    background-color: white;
+    width: 400px;
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+    padding: 10px;
+    border-radius: 30px;
+    transition: visibility 0s, opacity 0.5s linear;
+}
+
+.dropdown:hover .dropdown-info {
+    visibility: visible;
+    opacity: 1;
+    transition: visibility 0s, opacity 0.2s linear;
+}
+
+svg:hover {
+    background: rgba(0, 0, 0, 0.204);
+    border-radius: 50%;
 }
 
 @media (max-width: 1020px) {
@@ -148,9 +228,10 @@ span {
     }
 
     button {
-        font-size: 1.2em;
-        height: 35px;
-        width: 35px;
+        font-size: 1em;
+        height: 40px;
+        width: 40px;
+        margin: 1px 3px;
     }
 
     p {

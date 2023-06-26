@@ -58,6 +58,115 @@ function operate(num1, operator, num2) {
     }
 }
 
+function operationOrderWithoutParenthesis() {
+    for (let i = 0; i < 100; i++) {
+        if (answer.indexOf("^") === -1) {
+            break;
+        }
+
+        if (answer.indexOf("^") !== -1) {
+            operator = "^";
+        }
+
+        num1 = answer[answer.indexOf(operator) - 1];
+        num2 = answer[answer.indexOf(operator) + 1];
+        answer.splice(
+            answer.indexOf(operator) - 1,
+            3,
+            operate(+num1, operator, +num2)
+        );
+    }
+
+    for (let i = 0; i < 100; i++) {
+        if (
+            answer.indexOf("×") === -1 &&
+            answer.indexOf("÷") === -1 &&
+            answer.indexOf("%") === -1
+        ) {
+            break;
+        } else {
+            switch (true) {
+                case answer.indexOf("÷") !== -1 &&
+                    answer.indexOf("×") !== -1 &&
+                    answer.indexOf("%") !== -1:
+                    operator = "×";
+                    break;
+
+                case answer.indexOf("×") === -1 &&
+                    answer.indexOf("÷") !== -1 &&
+                    answer.indexOf("%") !== -1:
+                    operator = "÷";
+                    break;
+
+                case answer.indexOf("÷") === -1 &&
+                    answer.indexOf("×") !== -1 &&
+                    answer.indexOf("%") !== -1:
+                    operator = "%";
+                    break;
+
+                case answer.indexOf("÷") !== -1 &&
+                    answer.indexOf("×") !== -1 &&
+                    answer.indexOf("%") === -1:
+                    operator = "×";
+                    break;
+
+                case answer.indexOf("÷") === -1 &&
+                    answer.indexOf("×") === -1 &&
+                    answer.indexOf("%") !== -1:
+                    operator = "%";
+                    break;
+
+                case answer.indexOf("÷") !== -1 &&
+                    answer.indexOf("×") === -1 &&
+                    answer.indexOf("%") === -1:
+                    operator = "÷";
+                    break;
+
+                case answer.indexOf("÷") === -1 &&
+                    answer.indexOf("×") !== -1 &&
+                    answer.indexOf("%") === -1:
+                    operator = "×";
+                    break;
+
+                case answer.indexOf("×") === -1 &&
+                    answer.indexOf("÷") === -1 &&
+                    answer.indexOf("%") === -1:
+                    break;
+            }
+
+            num1 = answer[answer.indexOf(operator) - 1];
+            num2 = answer[answer.indexOf(operator) + 1];
+            answer.splice(
+                answer.indexOf(operator) - 1,
+                3,
+                operate(+num1, operator, +num2)
+            );
+        }
+    }
+
+    for (let i = 0; i < 100; i++) {
+        if (answer.indexOf("+") === -1 && answer.indexOf("-") === -1) {
+            break;
+        }
+
+        if (answer.indexOf("+") === -1 && answer.indexOf("-") !== -1) {
+            operator = "-";
+        } else if (answer.indexOf("-") === -1 && answer.indexOf("+") !== -1) {
+            operator = "+";
+        } else if (answer.indexOf("-") !== -1 && answer.indexOf("+") !== -1) {
+            operator = "+";
+        }
+
+        num1 = answer[answer.indexOf(operator) - 1];
+        num2 = answer[answer.indexOf(operator) + 1];
+        answer.splice(
+            answer.indexOf(operator) - 1,
+            3,
+            operate(+num1, operator, +num2)
+        );
+    }
+}
+
 const buttons = document.querySelectorAll("button");
 const screen = document.querySelector(".calc-upper-side p");
 let answer = "";
@@ -66,7 +175,7 @@ let textBeforeEqual = "";
 
 buttons.forEach((button) => {
     button.addEventListener("click", () => {
-        if (screen.innerText !== "0123456789+-×÷=") {
+        if (screen.innerText !== "0123456789.+-×÷^%=") {
             screen.style.color = "black";
         }
 
@@ -81,6 +190,12 @@ buttons.forEach((button) => {
             answer = "";
             textBeforeEqual = "";
         }
+
+        button.classList.add("animation");
+
+        setTimeout(() => {
+            button.classList.remove("animation");
+        }, 100);
 
         switch (true) {
             case answer.length === 1 && button.value === " = ":
@@ -104,8 +219,8 @@ buttons.forEach((button) => {
                 switch (true) {
                     case answer.length === 1:
                         answer = answer.slice(0, -1);
-                        screen.innerText = "0123456789+-×÷=";
-                        textBeforeEqual = "0123456789+-×÷=";
+                        screen.innerText = "0123456789.+-×÷^%=";
+                        textBeforeEqual = "0123456789.+-×÷^%=";
                         screen.style.color = "rgba(0, 0, 0, 0.695)";
                         break;
 
@@ -133,135 +248,43 @@ buttons.forEach((button) => {
             case button.value === " = " &&
                 answer !== "" &&
                 answer.split(" ").slice(-1)[0] !== "":
-                answer = answer.split(" ");
-
-                for (let i = 0; i < 100; i++) {
-                    if (answer.indexOf("^") === -1) {
-                        break;
-                    }
-
-                    if (answer.indexOf("^") !== -1) {
-                        operator = "^";
-                    }
-
-                    num1 = answer[answer.indexOf(operator) - 1];
-                    num2 = answer[answer.indexOf(operator) + 1];
-                    answer.splice(
-                        answer.indexOf(operator) - 1,
-                        3,
-                        operate(+num1, operator, +num2)
-                    );
+                if (answer.indexOf("(") !== -1 && answer.indexOf(")") !== -1) {
+                    answer = answer.split("");
                 }
 
                 for (let i = 0; i < 100; i++) {
-                    if (
-                        answer.indexOf("×") === -1 &&
-                        answer.indexOf("÷") === -1 &&
-                        answer.indexOf("%") === -1
-                    ) {
+                    if (answer.indexOf("(") === -1) {
                         break;
                     }
 
-                    switch (true) {
-                        case answer.indexOf("÷") !== -1 &&
-                            answer.indexOf("×") !== -1 &&
-                            answer.indexOf("%") !== -1:
-                            operator = "×";
-                            break;
-
-                        case answer.indexOf("×") === -1 &&
-                            answer.indexOf("÷") !== -1 &&
-                            answer.indexOf("%") !== -1:
-                            operator = "÷";
-                            break;
-
-                        case answer.indexOf("÷") === -1 &&
-                            answer.indexOf("×") !== -1 &&
-                            answer.indexOf("%") !== -1:
-                            operator = "%";
-                            break;
-
-                        case answer.indexOf("÷") !== -1 &&
-                            answer.indexOf("×") !== -1 &&
-                            answer.indexOf("%") === -1:
-                            operator = "×";
-                            break;
-
-                        case answer.indexOf("÷") === -1 &&
-                            answer.indexOf("×") === -1 &&
-                            answer.indexOf("%") !== -1:
-                            operator = "%";
-                            break;
-
-                        case answer.indexOf("÷") !== -1 &&
-                            answer.indexOf("×") === -1 &&
-                            answer.indexOf("%") === -1:
-                            operator = "÷";
-                            break;
-
-                        case answer.indexOf("÷") === -1 &&
-                            answer.indexOf("×") !== -1 &&
-                            answer.indexOf("%") === -1:
-                            operator = "×";
-                            break;
-
-                        case answer.indexOf("×") === -1 &&
-                            answer.indexOf("÷") === -1 &&
-                            answer.indexOf("%") === -1:
-                            break;
-                    }
-
-                    num1 = answer[answer.indexOf(operator) - 1];
-                    num2 = answer[answer.indexOf(operator) + 1];
-                    answer.splice(
-                        answer.indexOf(operator) - 1,
-                        3,
-                        operate(+num1, operator, +num2)
-                    );
-                }
-
-                for (let i = 0; i < 100; i++) {
-                    if (
-                        answer.indexOf("+") === -1 &&
-                        answer.indexOf("-") === -1
-                    ) {
+                    if (answer.indexOf(")") === -1) {
                         break;
                     }
 
                     if (
-                        answer.indexOf("+") === -1 &&
-                        answer.indexOf("-") !== -1
+                        answer.indexOf("(") !== -1 &&
+                        answer.indexOf(")") !== -1
                     ) {
-                        operator = "-";
-                    } else if (
-                        answer.indexOf("-") === -1 &&
-                        answer.indexOf("+") !== -1
-                    ) {
-                        operator = "+";
-                    } else if (
-                        answer.indexOf("-") !== -1 &&
-                        answer.indexOf("+") !== -1
-                    ) {
-                        operator = "+";
+                        answer.slice(0, answer.indexOf(")") - 1);
                     }
-
-                    num1 = answer[answer.indexOf(operator) - 1];
-                    num2 = answer[answer.indexOf(operator) + 1];
-                    answer.splice(
-                        answer.indexOf(operator) - 1,
-                        3,
-                        operate(+num1, operator, +num2)
-                    );
                 }
 
-                if (+num2 !== 0 && +num2 !== false) {
+                if (answer.includes("") === false) {
+                    answer = answer.join("").split(" ");
+                } else {
+                    answer = answer.split(" ");
+                }
+
+                operationOrderWithoutParenthesis();
+
+                if (+num2 !== false && operator !== "÷") {
                     answer = answer.join(" ");
                     screen.innerText = textBeforeEqual + " = " + answer;
                 }
                 break;
 
             case button.value === "clear":
-                screen.innerText = "0123456789+-×÷=";
+                screen.innerText = "0123456789.+-×÷^%=";
                 screen.style.color = "rgba(0, 0, 0, 0.695)";
                 answer = "";
                 textBeforeEqual = "";
