@@ -1,6 +1,15 @@
 let num1 = false;
 let num2 = false;
 let operator = "";
+let test = "(4 + (3 - 2 * 5))";
+let test2 = ["3", "", "+", "", "4"];
+
+// for (let i = 0; i < 5; i++) {
+//     console.log(test2);
+// }
+
+// let test3 = test2.filter((element) => element !== "");
+// console.log(test3);
 
 function add(num1, num2) {
     return num1 + num2;
@@ -145,6 +154,7 @@ function operationOrderWithoutParenthesis() {
     }
 
     for (let i = 0; i < 100; i++) {
+        console.log(`Test ${answer}`);
         if (answer.indexOf("+") === -1 && answer.indexOf("-") === -1) {
             break;
         }
@@ -159,6 +169,7 @@ function operationOrderWithoutParenthesis() {
 
         num1 = answer[answer.indexOf(operator) - 1];
         num2 = answer[answer.indexOf(operator) + 1];
+
         answer.splice(
             answer.indexOf(operator) - 1,
             3,
@@ -169,9 +180,11 @@ function operationOrderWithoutParenthesis() {
 
 const buttons = document.querySelectorAll("button");
 const screen = document.querySelector(".calc-upper-side p");
-let answer = "";
+let answer = "(2 + 2) + (2 + 3)";
 let lastOperator = answer.split(" ").slice(-2);
 let textBeforeEqual = "";
+
+// answer = "(3 + 4)"; //Delete this afterwords
 
 buttons.forEach((button) => {
     button.addEventListener("click", () => {
@@ -252,6 +265,8 @@ buttons.forEach((button) => {
                     answer = answer.split("");
                 }
 
+                let temp = answer;
+
                 for (let i = 0; i < 100; i++) {
                     if (answer.indexOf("(") === -1) {
                         break;
@@ -265,7 +280,22 @@ buttons.forEach((button) => {
                         answer.indexOf("(") !== -1 &&
                         answer.indexOf(")") !== -1
                     ) {
-                        answer.slice(0, answer.indexOf(")") - 1);
+                        let closeParenthesis = answer.indexOf(")");
+                        answer = answer.slice(0, closeParenthesis + 1);
+                        let openParenthesis = answer.lastIndexOf("(");
+                        answer = answer.slice(
+                            openParenthesis + 1,
+                            closeParenthesis
+                        );
+                        answer = answer.filter((element) => element !== " ");
+                        operationOrderWithoutParenthesis();
+                        temp[openParenthesis] = `${answer[0]}`;
+                        temp.splice(
+                            openParenthesis + 1,
+
+                            closeParenthesis
+                        );
+                        answer = temp;
                     }
                 }
 
