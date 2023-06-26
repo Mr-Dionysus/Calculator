@@ -1,15 +1,6 @@
 let num1 = false;
 let num2 = false;
 let operator = "";
-let test = "(4 + (3 - 2 * 5))";
-let test2 = ["3", "", "+", "", "4"];
-
-// for (let i = 0; i < 5; i++) {
-//     console.log(test2);
-// }
-
-// let test3 = test2.filter((element) => element !== "");
-// console.log(test3);
 
 function add(num1, num2) {
     return num1 + num2;
@@ -44,7 +35,7 @@ function power(num1, num2) {
 function modular(num1, num2) {
     return num1 % num2;
 }
-
+//Check operator and use correct function
 function operate(num1, operator, num2) {
     switch (true) {
         case operator === "+":
@@ -66,7 +57,7 @@ function operate(num1, operator, num2) {
             return modular(num1, num2);
     }
 }
-
+//Do operations with math order without parenthesises
 function operationOrderWithoutParenthesis() {
     for (let i = 0; i < 100; i++) {
         if (answer.indexOf("^") === -1) {
@@ -76,7 +67,7 @@ function operationOrderWithoutParenthesis() {
         if (answer.indexOf("^") !== -1) {
             operator = "^";
         }
-
+        //Change nums with operator to answer
         num1 = answer[answer.indexOf(operator) - 1];
         num2 = answer[answer.indexOf(operator) + 1];
         answer.splice(
@@ -142,7 +133,7 @@ function operationOrderWithoutParenthesis() {
                     answer.indexOf("%") === -1:
                     break;
             }
-
+            //Change nums with operator to answer
             num1 = answer[answer.indexOf(operator) - 1];
             num2 = answer[answer.indexOf(operator) + 1];
             answer.splice(
@@ -159,17 +150,20 @@ function operationOrderWithoutParenthesis() {
             break;
         }
 
-        if (answer.indexOf("+") === -1 && answer.indexOf("-") !== -1) {
-            operator = "-";
-        } else if (answer.indexOf("-") === -1 && answer.indexOf("+") !== -1) {
-            operator = "+";
-        } else if (answer.indexOf("-") !== -1 && answer.indexOf("+") !== -1) {
-            operator = "+";
+        switch (true) {
+            case answer.indexOf("+") === -1 && answer.indexOf("-") !== -1:
+                operator = "-";
+                break;
+            case answer.indexOf("-") === -1 && answer.indexOf("+") !== -1:
+                operator = "+";
+                break;
+            case answer.indexOf("-") !== -1 && answer.indexOf("+") !== -1:
+                operator = "+";
+                break;
         }
-
+        //Change nums with operator to answer
         num1 = answer[answer.indexOf(operator) - 1];
         num2 = answer[answer.indexOf(operator) + 1];
-
         answer.splice(
             answer.indexOf(operator) - 1,
             3,
@@ -180,11 +174,9 @@ function operationOrderWithoutParenthesis() {
 
 const buttons = document.querySelectorAll("button");
 const screen = document.querySelector(".calc-upper-side p");
-let answer = "(2 + 2) + (2 + 3)";
-let lastOperator = answer.split(" ").slice(-2);
+let answer = ""; //Num after =
+let lastOperator = answer.split(" ").slice(-2); //Find last operator
 let textBeforeEqual = "";
-
-// answer = "(3 + 4)"; //Delete this afterwords
 
 buttons.forEach((button) => {
     button.addEventListener("click", () => {
@@ -195,7 +187,7 @@ buttons.forEach((button) => {
         if (answer.length > 1) {
             lastOperator = answer.split(" ").slice(-2);
         }
-
+        //Clear screen after use = or / on 0
         if (
             screen.innerText.includes(" = ") ||
             screen.innerText === "You can't divide on 0!"
@@ -203,22 +195,22 @@ buttons.forEach((button) => {
             answer = "";
             textBeforeEqual = "";
         }
-
+        //Add animation after each use of button
         button.classList.add("animation");
-
         setTimeout(() => {
             button.classList.remove("animation");
         }, 100);
 
         switch (true) {
+            //Stop if one num and use =
             case answer.length === 1 && button.value === " = ":
                 break;
-
+            //Clear screen if was too much symbols
             case screen.innerText ===
                 "Sorry you wrote too much symbols, try again!":
                 screen.innerText = "";
                 break;
-
+            //Check on symbols limit and clear vars
             case screen.innerText.length === 161:
                 screen.innerText =
                     "Sorry you wrote too much symbols, try again!";
@@ -230,13 +222,14 @@ buttons.forEach((button) => {
                 operator = answer.split("").slice(-2)[0];
 
                 switch (true) {
+                    //Change screen on placeholder when delete last num
                     case answer.length === 1:
                         answer = answer.slice(0, -1);
                         screen.innerText = "0123456789.+-×÷^%=";
                         textBeforeEqual = "0123456789.+-×÷^%=";
                         screen.style.color = "rgba(0, 0, 0, 0.695)";
                         break;
-
+                    //Delete operators with empty spaces around them
                     case operator === "+" ||
                         operator === "-" ||
                         operator === "×" ||
@@ -247,55 +240,64 @@ buttons.forEach((button) => {
                         textBeforeEqual = answer;
                         screen.innerText = answer;
                         break;
-
+                    //Delete one num
                     case answer.length !== 0:
                         answer = answer.slice(0, -1);
                         textBeforeEqual = answer;
                         screen.innerText = answer;
                         break;
                 }
-
+                //Reset lastOperator [0] to default
                 lastOperator[0] = "";
                 break;
 
+            //Use if not an empty screen
             case button.value === " = " &&
                 answer !== "" &&
                 answer.split(" ").slice(-1)[0] !== "":
-                if (answer.indexOf("(") !== -1 && answer.indexOf(")") !== -1) {
+                if (answer.indexOf("(") !== -1 || answer.indexOf(")") !== -1) {
                     answer = answer.split("");
                 }
 
-                let temp = answer;
+                let arrWithParenthesises = answer;
 
                 for (let i = 0; i < 100; i++) {
-                    if (answer.indexOf("(") === -1) {
-                        break;
-                    }
+                    switch (true) {
+                        //Delete unused parenthesis if not have couple
+                        case answer.indexOf("(") === -1 &&
+                            answer.indexOf(")") !== -1:
+                            answer.splice(answer.indexOf(")"), 1);
+                            textBeforeEqual = answer.join("");
+                            break;
 
-                    if (answer.indexOf(")") === -1) {
-                        break;
-                    }
+                        case answer.indexOf(")") === -1 &&
+                            answer.indexOf("(") !== -1:
+                            answer.splice(answer.indexOf("("), 1);
+                            textBeforeEqual = answer.join("");
+                            break;
+                        //Else use operations in parenthesises first
+                        case answer.indexOf("(") !== -1 &&
+                            answer.indexOf(")") !== -1:
+                            let closeParenthesis = answer.indexOf(")");
+                            answer = answer.slice(0, closeParenthesis + 1);
+                            let openParenthesis = answer.lastIndexOf("(");
+                            answer = answer.slice(
+                                openParenthesis + 1,
+                                closeParenthesis
+                            );
+                            answer = answer.filter(
+                                (element) => element !== " "
+                            );
+                            operationOrderWithoutParenthesis();
+                            arrWithParenthesises[
+                                openParenthesis
+                            ] = `${answer[0]}`;
+                            arrWithParenthesises.splice(
+                                openParenthesis + 1,
 
-                    if (
-                        answer.indexOf("(") !== -1 &&
-                        answer.indexOf(")") !== -1
-                    ) {
-                        let closeParenthesis = answer.indexOf(")");
-                        answer = answer.slice(0, closeParenthesis + 1);
-                        let openParenthesis = answer.lastIndexOf("(");
-                        answer = answer.slice(
-                            openParenthesis + 1,
-                            closeParenthesis
-                        );
-                        answer = answer.filter((element) => element !== " ");
-                        operationOrderWithoutParenthesis();
-                        temp[openParenthesis] = `${answer[0]}`;
-                        temp.splice(
-                            openParenthesis + 1,
-
-                            closeParenthesis
-                        );
-                        answer = temp;
+                                closeParenthesis
+                            );
+                            answer = arrWithParenthesises;
                     }
                 }
 
@@ -306,13 +308,13 @@ buttons.forEach((button) => {
                 }
 
                 operationOrderWithoutParenthesis();
-
+                //Use if not / on 0
                 if (+num2 !== false && operator !== "÷") {
                     answer = answer.join(" ");
                     screen.innerText = textBeforeEqual + " = " + answer;
                 }
                 break;
-
+            //Clear screen and change text to placeholder
             case button.value === "clear":
                 screen.innerText = "0123456789.+-×÷^%=";
                 screen.style.color = "rgba(0, 0, 0, 0.695)";
@@ -322,9 +324,11 @@ buttons.forEach((button) => {
         }
 
         switch (true) {
+            //Stop if no operators and click on equal
             case answer.length === 1 && button.value === " = ":
                 break;
 
+            //Stop if no nums and click on operators
             case answer === "" &&
                 (button.value === " + " ||
                     button.value === " - " ||
@@ -336,6 +340,7 @@ buttons.forEach((button) => {
                     button.value === " = "):
                 break;
 
+            //Stop if use operators after num with point in the end
             case answer.length > 1 &&
                 answer.split("").slice(-3).includes(".") &&
                 answer.split(" ")[0].slice(-1) === "." &&
@@ -348,6 +353,7 @@ buttons.forEach((button) => {
                     button.value === "."):
                 break;
 
+            //Stop if try to use point again and operators after num with point in the end
             case (answer.length > 1 &&
                 answer.split("").slice(-3).includes(".") &&
                 button.value === ".") ||
@@ -362,6 +368,7 @@ buttons.forEach((button) => {
                         button.value === ".")):
                 break;
 
+            //Stop if after + try to use operators
             case lastOperator[0] === "+" &&
                 lastOperator[1] === "" &&
                 (button.value === " + " ||
@@ -373,6 +380,7 @@ buttons.forEach((button) => {
                     button.value === "."):
                 break;
 
+            //Stop if after + try to use operators
             case lastOperator[0] === "-" &&
                 lastOperator[1] === "" &&
                 (button.value === " + " ||
@@ -384,6 +392,7 @@ buttons.forEach((button) => {
                     button.value === "."):
                 break;
 
+            //Stop if after + try to use operators
             case lastOperator[0] === "×" &&
                 lastOperator[1] === "" &&
                 (button.value === " + " ||
@@ -395,6 +404,7 @@ buttons.forEach((button) => {
                     button.value === "."):
                 break;
 
+            //Stop if after + try to use operators
             case lastOperator[0] === "÷" &&
                 lastOperator[1] === "" &&
                 (button.value === " + " ||
@@ -406,6 +416,7 @@ buttons.forEach((button) => {
                     button.value === "."):
                 break;
 
+            //Stop if after + try to use operators
             case lastOperator[0] === "^" &&
                 lastOperator[1] === "" &&
                 (button.value === " + " ||
@@ -417,6 +428,7 @@ buttons.forEach((button) => {
                     button.value === "."):
                 break;
 
+            //Stop if after + try to use operators
             case lastOperator[0] === "%" &&
                 lastOperator[1] === "" &&
                 (button.value === " + " ||
@@ -428,12 +440,14 @@ buttons.forEach((button) => {
                     button.value === "."):
                 break;
 
+            //Stop if before point try to use multiple 0
             case answer.length > 1 &&
                 answer.split(" ").slice(-1)[0][0] === "0" &&
                 answer.split(" ").slice(-1)[0][1] !== "." &&
                 button.value === "0":
                 break;
 
+            //Show left part of equation, = and answer
             case button.value !== " = " &&
                 button.value !== "clear" &&
                 button.value !== "delete" &&
@@ -447,6 +461,7 @@ buttons.forEach((button) => {
         }
     });
 
+    //Add keyboard support
     window.addEventListener("keydown", (e) => {
         switch (true) {
             case e.code === "Digit0" && button.value === "0":
