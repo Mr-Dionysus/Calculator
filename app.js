@@ -178,16 +178,11 @@ let answer = ""; //Num after =
 let previousAnswer = "ans";
 let lastOperator = answer.split(" ").slice(-2); //Find last operator
 let textBeforeEqual = "";
+let openParenthesisCounter = 0;
+let closeParenthesisCounter = 0;
 
 buttons.forEach((button) => {
     button.addEventListener("click", () => {
-        if (
-            screen.innerText === "0123456789.+-×÷^%=" &&
-            button.value !== "delete"
-        ) {
-            screen.style.color = "black";
-        }
-
         if (answer.length > 1) {
             lastOperator = answer.split(" ").slice(-2);
         }
@@ -221,11 +216,9 @@ buttons.forEach((button) => {
                 answer = "";
                 textBeforeEqual = "";
                 break;
-
+            //Stop if don't have previous answer
             case button.value === "ans":
-                if (button.value === "ans") {
-                    button.value = previousAnswer;
-                }
+                button.value = previousAnswer;
                 break;
 
             case button.value === "delete":
@@ -345,10 +338,19 @@ buttons.forEach((button) => {
         }
 
         switch (true) {
+            case button.value === "(":
+                openParenthesisCounter++;
+                break;
+
+            case button.value === ")":
+                closeParenthesisCounter++;
+                break;
+        }
+
+        switch (true) {
             //Stop if no operators and click on equal
             case answer.length === 1 && button.value === " = ":
                 break;
-
             //Stop if no nums and click on operators
             case answer === "" &&
                 (button.value === " + " ||
@@ -360,7 +362,6 @@ buttons.forEach((button) => {
                     button.value === "." ||
                     button.value === " = "):
                 break;
-
             //Stop if use operators after num with point in the end
             case answer.length > 1 &&
                 answer.split("").slice(-3).includes(".") &&
@@ -373,7 +374,6 @@ buttons.forEach((button) => {
                     button.value === " % " ||
                     button.value === "."):
                 break;
-
             //Stop if try to use point again and operators after num with point in the end
             case (answer.length > 1 &&
                 answer.split("").slice(-3).includes(".") &&
@@ -388,7 +388,6 @@ buttons.forEach((button) => {
                         button.value === " % " ||
                         button.value === ".")):
                 break;
-
             //Stop if after + try to use operators
             case lastOperator[0] === "+" &&
                 lastOperator[1] === "" &&
@@ -400,7 +399,6 @@ buttons.forEach((button) => {
                     button.value === " % " ||
                     button.value === "."):
                 break;
-
             //Stop if after + try to use operators
             case lastOperator[0] === "-" &&
                 lastOperator[1] === "" &&
@@ -412,7 +410,6 @@ buttons.forEach((button) => {
                     button.value === " % " ||
                     button.value === "."):
                 break;
-
             //Stop if after + try to use operators
             case lastOperator[0] === "×" &&
                 lastOperator[1] === "" &&
@@ -424,7 +421,6 @@ buttons.forEach((button) => {
                     button.value === " % " ||
                     button.value === "."):
                 break;
-
             //Stop if after + try to use operators
             case lastOperator[0] === "÷" &&
                 lastOperator[1] === "" &&
@@ -436,7 +432,6 @@ buttons.forEach((button) => {
                     button.value === " % " ||
                     button.value === "."):
                 break;
-
             //Stop if after + try to use operators
             case lastOperator[0] === "^" &&
                 lastOperator[1] === "" &&
@@ -448,7 +443,6 @@ buttons.forEach((button) => {
                     button.value === " % " ||
                     button.value === "."):
                 break;
-
             //Stop if after + try to use operators
             case lastOperator[0] === "%" &&
                 lastOperator[1] === "" &&
@@ -460,14 +454,35 @@ buttons.forEach((button) => {
                     button.value === " % " ||
                     button.value === "."):
                 break;
-
+            //Stop if after ( try to use operators)
+            case answer.slice(-1) === "(" &&
+                (button.value === " + " ||
+                    button.value === " - " ||
+                    button.value === " × " ||
+                    button.value === " ÷ " ||
+                    button.value === " ^ " ||
+                    button.value === " % " ||
+                    button.value === "."):
+                break;
             //Stop if before point try to use multiple 0
             case answer.length > 1 &&
                 answer.split(" ").slice(-1)[0][0] === "0" &&
                 answer.split(" ").slice(-1)[0][1] !== "." &&
                 button.value === "0":
                 break;
-
+            //Stop if ) don't have ( pair before
+            case button.value === ")" &&
+                (answer.includes("(") === false ||
+                    answer.slice(-1) === "(" ||
+                    answer.slice(answer.lastIndexOf("(")).slice(-1) === " " ||
+                    answer.split(" ").slice(-1)[0].includes("(")):
+                closeParenthesisCounter--;
+                break;
+            //Stop if open parenthesis will be less than close
+            case openParenthesisCounter === closeParenthesisCounter - 1 &&
+                button.value === ")":
+                closeParenthesisCounter--;
+                break;
             //Show manipulations on the screen
             case button.value !== " = " &&
                 button.value !== "clear" &&
@@ -479,10 +494,15 @@ buttons.forEach((button) => {
                 answer += button.value;
                 textBeforeEqual += button.value;
                 screen.innerText = answer;
+                //Color text in black if it's not a placeholder
+                if (screen.innerText === "0123456789.+-×÷^%=") {
+                    screen.style.color = rgba(0, 0, 0, 0.5);
+                } else {
+                    screen.style.color = "black";
+                }
                 break;
         }
     });
-
     //Add keyboard support
     window.addEventListener("keydown", (e) => {
         switch (true) {
