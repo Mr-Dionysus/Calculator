@@ -181,7 +181,10 @@ let textBeforeEqual = "";
 
 buttons.forEach((button) => {
     button.addEventListener("click", () => {
-        if (screen.innerText === "0123456789.+-×÷^%=") {
+        if (
+            screen.innerText === "0123456789.+-×÷^%=" &&
+            button.value !== "delete"
+        ) {
             screen.style.color = "black";
         }
 
@@ -543,7 +546,9 @@ buttons.forEach((button) => {
                 button.click();
                 break;
 
-            case e.code === "Backspace" && button.value === "delete":
+            case e.code === "Backspace" &&
+                button.value === "delete" &&
+                e.ctrlKey === false:
                 button.click();
                 break;
 
