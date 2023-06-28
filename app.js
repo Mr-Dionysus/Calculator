@@ -145,7 +145,6 @@ function operationOrderWithoutParenthesis() {
     }
 
     for (let i = 0; i < 100; i++) {
-        console.log(`Test ${answer}`);
         if (answer.indexOf("+") === -1 && answer.indexOf("-") === -1) {
             break;
         }
@@ -182,7 +181,7 @@ let textBeforeEqual = "";
 
 buttons.forEach((button) => {
     button.addEventListener("click", () => {
-        if (screen.innerText !== "0123456789.+-×÷^%=") {
+        if (screen.innerText === "0123456789.+-×÷^%=") {
             screen.style.color = "black";
         }
 
@@ -205,7 +204,7 @@ buttons.forEach((button) => {
 
         switch (true) {
             //Stop if one num and use =
-            case answer.length === 1 && button.value === " = ":
+            case answer.split(" ").length === 1 && button.value === " = ":
                 break;
             //Clear screen if was too much symbols
             case screen.innerText ===
