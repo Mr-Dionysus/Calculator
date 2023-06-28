@@ -545,6 +545,11 @@ buttons.forEach((button) => {
                 screen.innerText = answer;
                 textBeforeEqual = answer;
                 break;
+            case answer.slice(-1) !== " " &&
+                answer.slice(-1) !== "(" &&
+                button.value === "(":
+                break;
+
             //Stop if after ( try to use operators)
             case answer.slice(-1) === "(" &&
                 (button.value === " + " ||
