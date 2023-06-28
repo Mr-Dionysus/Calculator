@@ -158,7 +158,7 @@ function operationOrderWithoutParenthesis() {
                 operator = "+";
                 break;
             case answer.indexOf("-") !== -1 && answer.indexOf("+") !== -1:
-                operator = "+";
+                operator = "-";
                 break;
         }
         //Change nums with operator to answer
@@ -173,8 +173,10 @@ function operationOrderWithoutParenthesis() {
 }
 
 const buttons = document.querySelectorAll("button");
+const ans = document.querySelector("button[value = 'ans']");
 const screen = document.querySelector(".calc-upper-side p");
 let answer = ""; //Num after =
+let previousAnswer = "ans";
 let lastOperator = answer.split(" ").slice(-2); //Find last operator
 let textBeforeEqual = "";
 
@@ -218,6 +220,12 @@ buttons.forEach((button) => {
                 textBeforeEqual = "";
                 break;
 
+            case button.value === "ans":
+                if (button.value === "ans") {
+                    button.value = previousAnswer;
+                }
+                break;
+
             case button.value === "delete":
                 operator = answer.split("").slice(-2)[0];
 
@@ -227,7 +235,7 @@ buttons.forEach((button) => {
                         answer = answer.slice(0, -1);
                         screen.innerText = "0123456789.+-×÷^%=";
                         textBeforeEqual = "0123456789.+-×÷^%=";
-                        screen.style.color = "rgba(0, 0, 0, 0.695)";
+                        screen.style.color = "rgba(0, 0, 0, 0.5)";
                         break;
                     //Delete operators with empty spaces around them
                     case operator === "+" ||
@@ -313,11 +321,18 @@ buttons.forEach((button) => {
                     answer = answer.join(" ");
                     screen.innerText = textBeforeEqual + " = " + answer;
                 }
+
+                previousAnswer = answer;
+
+                if (ans.value !== "ans") {
+                    ans.value = "ans";
+                }
+
                 break;
             //Clear screen and change text to placeholder
             case button.value === "clear":
                 screen.innerText = "0123456789.+-×÷^%=";
-                screen.style.color = "rgba(0, 0, 0, 0.695)";
+                screen.style.color = "rgba(0, 0, 0, 0.5)";
                 answer = "";
                 textBeforeEqual = "";
                 break;
@@ -447,10 +462,11 @@ buttons.forEach((button) => {
                 button.value === "0":
                 break;
 
-            //Show left part of equation, = and answer
+            //Show manipulations on the screen
             case button.value !== " = " &&
                 button.value !== "clear" &&
                 button.value !== "delete" &&
+                button.value !== "ans" &&
                 screen.innerText !==
                     "Sorry you wrote too much symbols, try again!":
                 textBeforeEqual = answer;

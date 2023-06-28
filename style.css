@@ -43,6 +43,7 @@ button {
     border: 3px solid #0077b6;
     border-radius: 50%;
     cursor: default;
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
     background: white;
     transition: background 0.7s, cursor 5s;
 }
@@ -65,7 +66,7 @@ button[value=" % "] {
 
 button[value="."],
 button[value=" = "],
-button[value="ans"],
+#previous-answer,
 button[value="("],
 button[value=")"],
 button[value="(-)"] {
@@ -94,7 +95,7 @@ button[value=" % "]:hover {
 
 button[value="."]:hover,
 button[value=" = "]:hover,
-button[value="ans"]:hover,
+#previous-answer:hover,
 button[value="("]:hover,
 button[value=")"]:hover,
 button[value="(-)"]:hover {
@@ -117,25 +118,27 @@ p {
     flex-direction: column;
     border: 2px solid rgba(0, 0, 0, 0.261);
     border-radius: 50px;
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
     background: #030b5e2e;
 }
 
 .calc-upper-side {
     box-sizing: border-box;
     height: 400px;
-    width: 621.771px;
+    width: 620px;
     padding: 10px;
     display: flex;
     flex-direction: row-reverse;
     align-items: center;
     word-wrap: break-word;
-    background: rgb(255, 255, 255);
+    background: #e3eeff;
     border-radius: 50px;
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
 }
 
 .screen {
     box-sizing: border-box;
-    width: 621.771px;
+    width: 620px;
     display: flex;
     justify-content: center;
 }
@@ -143,7 +146,7 @@ p {
 .calc-lower-side {
     box-sizing: border-box;
     height: 400px;
-    width: 621.771px;
+    width: 620px;
     padding: 5px;
     display: flex;
     flex-wrap: wrap;
@@ -165,6 +168,7 @@ svg {
     width: 30px;
     position: absolute;
     border-radius: 50%;
+    box-shadow: 0px 0px 15px 0px rgb(239, 255, 12);
     background: white;
     transition: background 0.5s;
 }
