@@ -364,6 +364,7 @@ buttons.forEach((button) => {
                 }
 
                 previousAnswer = answer;
+                answerInfoH3.innerText = `Answer = ${answer}`;
 
                 if (ans.value !== "ans") {
                     ans.value = "ans";
@@ -701,4 +702,14 @@ buttons.forEach((button) => {
                 break;
         }
     });
+});
+
+const previousAnswerButton = document.querySelector("#answer-info");
+const answerInfo = document.querySelector("#previous-answer");
+const answerInfoH3 = document.querySelector("#answer-info h3");
+window.addEventListener("mouseover", (e) => {
+    previousAnswerButton.classList.add("active");
+    if (e.target.value !== "ans") {
+        previousAnswerButton.classList.remove("active");
+    }
 });
