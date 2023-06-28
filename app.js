@@ -59,7 +59,7 @@ function operate(num1, operator, num2) {
 }
 //Do operations with math order without parenthesises
 function operationOrderWithoutParenthesis() {
-    for (let i = 0; i < 100; i++) {
+    for (let i = 0; i < answer.length; i++) {
         if (answer.indexOf("^") === -1) {
             break;
         }
@@ -77,7 +77,7 @@ function operationOrderWithoutParenthesis() {
         );
     }
 
-    for (let i = 0; i < 100; i++) {
+    for (let i = 0; i < answer.length; i++) {
         if (
             answer.indexOf("×") === -1 &&
             answer.indexOf("÷") === -1 &&
@@ -85,6 +85,7 @@ function operationOrderWithoutParenthesis() {
         ) {
             break;
         } else {
+            //Find operator in equation
             switch (true) {
                 case answer.indexOf("÷") !== -1 &&
                     answer.indexOf("×") !== -1 &&
@@ -148,14 +149,16 @@ function operationOrderWithoutParenthesis() {
         if (answer.indexOf("+") === -1 && answer.indexOf("-") === -1) {
             break;
         }
-
+        //Find operator in equation
         switch (true) {
             case answer.indexOf("+") === -1 && answer.indexOf("-") !== -1:
                 operator = "-";
                 break;
+
             case answer.indexOf("-") === -1 && answer.indexOf("+") !== -1:
                 operator = "+";
                 break;
+
             case answer.indexOf("-") !== -1 && answer.indexOf("+") !== -1:
                 operator = "-";
                 break;
@@ -163,11 +166,15 @@ function operationOrderWithoutParenthesis() {
         //Change nums with operator to answer
         num1 = answer[answer.indexOf(operator) - 1];
         num2 = answer[answer.indexOf(operator) + 1];
-        answer.splice(
-            answer.indexOf(operator) - 1,
-            3,
-            operate(+num1, operator, +num2)
-        );
+        if (num1 !== undefined) {
+            answer.splice(
+                answer.indexOf(operator) - 1,
+                3,
+                operate(+num1, operator, +num2)
+            );
+        } else {
+            num1 = answer.join("");
+        }
     }
 }
 
@@ -215,6 +222,13 @@ buttons.forEach((button) => {
                     "Sorry you wrote too much symbols, try again!";
                 answer = "";
                 textBeforeEqual = "";
+                break;
+            case button.value === "(-)":
+                answer = answer.split(" ");
+                let tempNum = answer.slice(-1);
+                answer.pop();
+                answer.push(`(-${tempNum})`);
+                answer = answer.join(" ");
                 break;
             //Stop if don't have previous answer
             case button.value === "ans":
@@ -264,7 +278,7 @@ buttons.forEach((button) => {
 
                 let arrWithParenthesises = answer;
 
-                for (let i = 0; i < 100; i++) {
+                for (let i = 0; i < answer.length; i++) {
                     switch (true) {
                         //Delete unused parenthesis if not have couple
                         case answer.indexOf("(") === -1 &&
@@ -288,19 +302,33 @@ buttons.forEach((button) => {
                                 openParenthesis + 1,
                                 closeParenthesis
                             );
+
                             answer = answer.filter(
                                 (element) => element !== " "
                             );
-                            operationOrderWithoutParenthesis();
+                            //If num negative than use that num with minus in the next operations
+                            if (
+                                textBeforeEqual[
+                                    textBeforeEqual.indexOf("-") + 1
+                                ] !== "" &&
+                                textBeforeEqual[
+                                    textBeforeEqual.indexOf("-") - 1
+                                ] === "("
+                            ) {
+                                answer = answer.join("").split(" ");
+                            } else {
+                                operationOrderWithoutParenthesis();
+                            }
+
                             arrWithParenthesises[
                                 openParenthesis
                             ] = `${answer[0]}`;
                             arrWithParenthesises.splice(
                                 openParenthesis + 1,
-
-                                closeParenthesis
+                                closeParenthesis - openParenthesis
                             );
                             answer = arrWithParenthesises;
+                            break;
                     }
                 }
 
@@ -317,6 +345,10 @@ buttons.forEach((button) => {
                         break;
                     } else {
                         answer = answer.join(" ");
+                        if (answer === "Infinity") {
+                            answer =
+                                "Sorry this number is too big. Try to use something smaller!";
+                        }
                         screen.innerText = textBeforeEqual + " = " + answer;
                     }
                 }
@@ -515,8 +547,10 @@ buttons.forEach((button) => {
                 screen.innerText !==
                     "Sorry you wrote too much symbols, try again!":
                 textBeforeEqual = answer;
-                answer += button.value;
-                textBeforeEqual += button.value;
+                if (button.value !== "(-)") {
+                    answer += button.value;
+                    textBeforeEqual += button.value;
+                }
                 screen.innerText = answer;
                 //Color text in black if it's not a placeholder
                 if (screen.innerText === "0123456789.+-×÷^%=") {
