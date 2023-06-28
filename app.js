@@ -223,11 +223,21 @@ buttons.forEach((button) => {
                 answer = "";
                 textBeforeEqual = "";
                 break;
+
             case button.value === "(-)":
                 answer = answer.split(" ");
                 let tempNum = answer.slice(-1);
-                answer.pop();
-                answer.push(`(-${tempNum})`);
+                //If previously change to negative that return back to positive
+                console.log(tempNum);
+                if (tempNum[0][1] === "-") {
+                    answer.pop();
+                    tempNum = tempNum[0].slice(2, -1);
+                    answer.push(`${tempNum}`);
+                } else {
+                    answer.pop();
+                    answer.push(`(-${tempNum})`);
+                }
+
                 answer = answer.join(" ");
                 break;
             //Stop if don't have previous answer
@@ -392,7 +402,11 @@ buttons.forEach((button) => {
                     button.value === " ^ " ||
                     button.value === " % " ||
                     button.value === "." ||
-                    button.value === " = "):
+                    button.value === " = " ||
+                    button.value === "(-)"):
+                break;
+
+            case answer === "(-)":
                 break;
             //Stop if use operators after num with point in the end
             case answer.length > 1 &&
@@ -429,7 +443,8 @@ buttons.forEach((button) => {
                     button.value === " ÷ " ||
                     button.value === " ^ " ||
                     button.value === " % " ||
-                    button.value === "."):
+                    button.value === "." ||
+                    button.value === "(-)"):
                 answer = answer.slice(0, -3);
                 answer += button.value;
                 screen.innerText = answer;
@@ -444,7 +459,8 @@ buttons.forEach((button) => {
                     button.value === " ÷ " ||
                     button.value === " ^ " ||
                     button.value === " % " ||
-                    button.value === "."):
+                    button.value === "." ||
+                    button.value === "(-)"):
                 answer = answer.slice(0, -3);
                 answer += button.value;
                 screen.innerText = answer;
@@ -459,7 +475,8 @@ buttons.forEach((button) => {
                     button.value === " ÷ " ||
                     button.value === " ^ " ||
                     button.value === " % " ||
-                    button.value === "."):
+                    button.value === "." ||
+                    button.value === "(-)"):
                 answer = answer.slice(0, -3);
                 answer += button.value;
                 screen.innerText = answer;
@@ -474,7 +491,8 @@ buttons.forEach((button) => {
                     button.value === " ÷ " ||
                     button.value === " ^ " ||
                     button.value === " % " ||
-                    button.value === "."):
+                    button.value === "." ||
+                    button.value === "(-)"):
                 answer = answer.slice(0, -3);
                 answer += button.value;
                 screen.innerText = answer;
@@ -489,13 +507,30 @@ buttons.forEach((button) => {
                     button.value === " ÷ " ||
                     button.value === " ^ " ||
                     button.value === " % " ||
-                    button.value === "."):
+                    button.value === "." ||
+                    button.value === "(-)"):
                 answer = answer.slice(0, -3);
                 answer += button.value;
                 screen.innerText = answer;
                 textBeforeEqual = answer;
                 break;
             //Stop if after + try to use operators
+            case lastOperator[0] === "%" &&
+                lastOperator[1] === "" &&
+                (button.value === " + " ||
+                    button.value === " - " ||
+                    button.value === " × " ||
+                    button.value === " ÷ " ||
+                    button.value === " ^ " ||
+                    button.value === " % " ||
+                    button.value === "." ||
+                    button.value === "(-)"):
+                answer = answer.slice(0, -3);
+                answer += button.value;
+                screen.innerText = answer;
+                textBeforeEqual = answer;
+                break;
+
             case lastOperator[0] === "%" &&
                 lastOperator[1] === "" &&
                 (button.value === " + " ||
