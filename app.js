@@ -316,9 +316,13 @@ buttons.forEach((button) => {
 
                 operationOrderWithoutParenthesis();
                 //Use if not / on 0
-                if (+num2 !== false && operator !== "÷") {
-                    answer = answer.join(" ");
-                    screen.innerText = textBeforeEqual + " = " + answer;
+                if (+num2 !== false) {
+                    if (+num2 === 0 && operator === "÷") {
+                        break;
+                    } else {
+                        answer = answer.join(" ");
+                        screen.innerText = textBeforeEqual + " = " + answer;
+                    }
                 }
 
                 previousAnswer = answer;
