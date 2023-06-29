@@ -437,6 +437,27 @@ buttons.forEach((button) => {
                 break;
             //Change 0 to num if don't use . or operator after 0
             case answer.slice(-1) === "0" &&
+                answer.slice(-2)[0] === " " &&
+                (button.value === "0" ||
+                    button.value === "1" ||
+                    button.value === "2" ||
+                    button.value === "3" ||
+                    button.value === "4" ||
+                    button.value === "5" ||
+                    button.value === "6" ||
+                    button.value === "7" ||
+                    button.value === "8" ||
+                    button.value === "9"):
+                answer = answer.split(" ");
+                answer.pop();
+                answer.push(button.value);
+                answer = answer.join(" ");
+                screen.innerText = answer;
+                textBeforeEqual = answer;
+                break;
+            //Change 0 to num if - is first num in equation
+            case answer[0] === "0" &&
+                answer[1] === undefined &&
                 (button.value === "0" ||
                     button.value === "1" ||
                     button.value === "2" ||
