@@ -645,101 +645,134 @@ buttons.forEach((button) => {
     //Add keyboard support
     window.addEventListener("keydown", (e) => {
         switch (true) {
-            case e.code === "Digit0" && button.value === "0":
-                button.click();
-                break;
-
-            case e.code === "Digit1" && button.value === "1":
-                button.click();
-                break;
-
-            case e.code === "Digit2" && button.value === "2":
-                button.click();
-                break;
-
-            case e.code === "Digit3" && button.value === "3":
-                button.click();
-                break;
-
-            case e.code === "Digit4" && button.value === "4":
-                button.click();
-                break;
-
-            case e.code === "Digit5" &&
-                button.value === "5" &&
+            //0
+            case button.value === "0" &&
+                e.code === "Digit0" &&
                 e.shiftKey === false:
                 button.click();
                 break;
-
-            case e.code === "Digit6" &&
-                button.value === "6" &&
+            //1
+            case button.value === "1" && e.code === "Digit1":
+                button.click();
+                break;
+            //2
+            case button.value === "2" && e.code === "Digit2":
+                button.click();
+                break;
+            //3
+            case button.value === "3" && e.code === "Digit3":
+                button.click();
+                break;
+            //4
+            case button.value === "4" && e.code === "Digit4":
+                button.click();
+                break;
+            //5
+            case button.value === "5" &&
+                e.code === "Digit5" &&
                 e.shiftKey === false:
                 button.click();
                 break;
-
-            case e.code === "Digit7" && button.value === "7":
-                button.click();
-                break;
-
-            case e.code === "Digit8" &&
-                button.value === "8" &&
+            //6
+            case button.value === "6" &&
+                e.code === "Digit6" &&
                 e.shiftKey === false:
                 button.click();
                 break;
-
-            case e.code === "Digit9" && button.value === "9":
+            //7
+            case button.value === "7" && e.code === "Digit7":
                 button.click();
                 break;
-
-            case e.code === "Period" && button.value === ".":
+            //8
+            case button.value === "8" &&
+                e.code === "Digit8" &&
+                e.shiftKey === false:
+                button.click();
+                break;
+            //9
+            case button.value === "9" &&
+                e.code === "Digit9" &&
+                e.shiftKey === false:
+                button.click();
+                break;
+            //Decimal
+            case button.value === "." && e.code === "Period":
                 button.click();
                 break;
             //Prevent use Enter on focus item
-            case e.code === "Enter" && button.value === " = ":
+            case button.value === " = " &&
+                e.code === "Enter" &&
+                e.shiftKey === false:
                 e.preventDefault();
                 e.target.blur();
                 button.click();
                 break;
-
-            case e.ctrlKey === true &&
-                e.code === "Backspace" &&
-                button.value === "clear":
+            //Clear Screen
+            case button.value === "clear" &&
+                e.ctrlKey === true &&
+                e.code === "Backspace":
                 button.click();
                 break;
-
-            case e.code === "Backspace" &&
-                button.value === "delete" &&
+            //Delete
+            case button.value === "delete" &&
+                e.code === "Backspace" &&
                 e.ctrlKey === false:
                 button.click();
                 break;
-
-            case e.code === "Equal" && button.value === " + ":
+            //Addition
+            case button.value === " + " && e.code === "Equal":
                 button.click();
                 break;
-
-            case e.code === "Minus" && button.value === " - ":
+            //Substraction
+            case button.value === " - " &&
+                e.code === "Minus" &&
+                e.shiftKey === false:
                 button.click();
                 break;
-
-            case e.shiftKey === true &&
-                e.code === "Digit8" &&
-                button.value === " × ":
+            //Multiplication
+            case button.value === " × " &&
+                e.shiftKey === true &&
+                e.code === "Digit8":
                 button.click();
                 break;
-
-            case e.code === "Slash" && button.value === " ÷ ":
+            //Division
+            case button.value === " ÷ " && e.code === "Slash":
                 button.click();
                 break;
-
-            case e.shiftKey === true &&
-                e.code === "Digit6" &&
-                button.value === " ^ ":
+            //Exponentiation
+            case button.value === " ^ " &&
+                e.shiftKey === true &&
+                e.code === "Digit6":
                 button.click();
                 break;
-
-            case e.shiftKey === true &&
-                e.code === "Digit5" &&
-                button.value === " % ":
+            //Remainder
+            case button.value === " % " &&
+                e.shiftKey === true &&
+                e.code === "Digit5":
+                button.click();
+                break;
+            //Opposite Sign
+            case button.value === "(-)" &&
+                e.shiftKey === true &&
+                e.code === "Minus":
+                button.click();
+                break;
+            //Open Parenthesis
+            case button.value === "(" &&
+                e.shiftKey === true &&
+                e.code === "Digit9":
+                button.click();
+                break;
+            //Close Parenthesis
+            case button.value === ")" &&
+                e.shiftKey === true &&
+                e.code === "Digit0":
+                button.click();
+                break;
+            //Previous Answer
+            case button.innerText === "Ans" &&
+                e.shiftKey === true &&
+                e.code === "Enter":
                 button.click();
                 break;
         }
@@ -755,3 +788,10 @@ window.addEventListener("mouseover", (e) => {
         previousAnswerButton.classList.remove("active");
     }
 });
+{
+    /* <li>Opposite Sign <span>Shift + -</span></li>
+<li>( or ) <span>Shift + 9 or 0</span></li>
+<li>
+                                    Previous Answer <span>Shift + Enter</span>
+                                </li> */
+}
