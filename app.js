@@ -655,7 +655,9 @@ buttons.forEach((button) => {
                 button.click();
                 break;
 
-            case e.code === "Enter" && button.value === " = ":
+            case e.code === "Enter" &&
+                e.shiftKey === true &&
+                button.value === " = ":
                 button.click();
                 break;
 
