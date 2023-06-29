@@ -435,6 +435,25 @@ buttons.forEach((button) => {
                         button.value === " % " ||
                         button.value === ".")):
                 break;
+            //Change 0 to num if don't use . or operator after 0
+            case answer.slice(-1) === "0" &&
+                (button.value === "0" ||
+                    button.value === "1" ||
+                    button.value === "2" ||
+                    button.value === "3" ||
+                    button.value === "4" ||
+                    button.value === "5" ||
+                    button.value === "6" ||
+                    button.value === "7" ||
+                    button.value === "8" ||
+                    button.value === "9"):
+                answer = answer.split(" ");
+                answer.pop();
+                answer.push(button.value);
+                answer = answer.join(" ");
+                screen.innerText = answer;
+                textBeforeEqual = answer;
+                break;
             //Stop if after + try to use operators
             case lastOperator[0] === "+" &&
                 lastOperator[1] === "" &&
