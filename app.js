@@ -654,10 +654,10 @@ buttons.forEach((button) => {
             case e.code === "Period" && button.value === ".":
                 button.click();
                 break;
-
-            case e.code === "Enter" &&
-                e.shiftKey === true &&
-                button.value === " = ":
+            //Prevent use Enter on focus item
+            case e.code === "Enter" && button.value === " = ":
+                e.preventDefault();
+                e.target.blur();
                 button.click();
                 break;
 
