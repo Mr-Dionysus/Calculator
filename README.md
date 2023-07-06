@@ -1,6 +1,6 @@
 # Проект "Калькулятор"
 
-Проект "Калькулятор" создан с начальной информацией от https://www.theodinproject.com Дается условие проекта, а решение зависит от меня. Я учился использовать JS для манипуляций с сайтом, написанием логики и добавлением поддержки клавиатуры.
+Проект "Калькулятор" создан с начальной информацией от https://www.theodinproject.com/lessons/foundations-calculator Дается условие проекта, а решение зависит от меня. Я учился использовать JS для манипуляций с сайтом, написанием логики и добавлением поддержки клавиатуры.
 
 ## Функции:
 
@@ -19,7 +19,7 @@
 
 # Project "Calculator"
 
-Project "Calculator" created with starting info from https://www.theodinproject.com They give you starter project's info and then creating the project lies only on me. I study using JS for manipulation on website, write logic and add keyboard support.
+Project "Calculator" created with starting info from https://www.theodinproject.com/lessons/foundations-calculator They give you starter project's info and then creating the project lies only on me. I study using JS for manipulation on website, write logic and add keyboard support.
 
 ## Functions:
 
