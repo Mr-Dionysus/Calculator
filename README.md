@@ -1,5 +1,37 @@
-# Calculator
+# Проект 'Калькулятор'
 
-Calculator with HTML, CSS and JS. Created from TOP's few tips https://www.theodinproject.com/lessons/foundations-calculator
+Проект 'Калькулятор' создан с начальной информацией от https://www.theodinproject.com Дается условие проекта, а решение зависит от меня. Я учился использовать JS для манипуляций с сайтом, написанием логики и добавлением поддержки клавиатуры.
 
-Калькулятор с функционалом телефонного, то есть есть учет приоритета операций (сначала умножение и деление), после получения результата идет очистка экрана по нажатию на любую из цифр, чтобы каждый раз не нажимать на Clear, можно к ответу применять любые дальнейшие операции и делать дробные числа.
+## Функции:
+
+-   Сложение, вычитание, умножение, деление, нахождение остатка от деления, скобки, степень, изменение знака на противоположный, получение предыдущего ответа, удаление символа, полная очистка экрана, десятичные числа;
+-   Есть учет приоритета операций;
+-   После получения результата экран стирается по нажатию на любую из цифр;
+-   Поддержка клавиатуры;
+-   Ограничение символов, чтобы они не выходили за рамки;
+-   Адаптивный дизайн.
+
+### Можно Добавить:
+
+-   Возможность сразу применять операции к полученному ответу;
+-   Темы;
+-   Больше функций из инженерного калькулятора.
+
+# Project 'Calculator'
+
+Project 'Calculator' created with starting info from https://www.theodinproject.com They give you starter project's info and then creating the project lies only on me. I study using JS for manipulation on website, write logic and add keyboard support.
+
+## Functions:
+
+-   Addition, subtraction, multiplication, division, finding the remainder of the division, parentheses, power, changing the sign to the opposite, getting the previous answer, removing the character, completely clearing the screen, decimal numbers;
+-   Operation priority;
+-   Clear screen after using Equal and click on any num;
+-   Keyboard support;
+-   Sign restriction;
+-   Adaptive design.
+
+### Can Add:
+
+-   Posibility to use operations on answer right away;
+-   Themes;
+-   More functions from engeneering calculator.
