@@ -217,7 +217,7 @@ buttons.forEach((button) => {
                 screen.innerText = "";
                 break;
             //Check on symbols limit and clear vars
-            case screen.innerText.length === 161:
+            case screen.innerText.length === 122:
                 screen.innerText =
                     "Sorry you wrote too much symbols, try again!";
                 answer = "";
@@ -586,9 +586,11 @@ buttons.forEach((button) => {
                 screen.innerText = answer;
                 textBeforeEqual = answer;
                 break;
+
             case answer.slice(-1) !== " " &&
                 answer.slice(-1) !== "(" &&
-                button.value === "(":
+                button.value === "(" &&
+                answer.length > 1:
                 break;
 
             //Stop if after ( try to use operators)
@@ -788,10 +790,3 @@ window.addEventListener("mouseover", (e) => {
         previousAnswerButton.classList.remove("active");
     }
 });
-{
-    /* <li>Opposite Sign <span>Shift + -</span></li>
-<li>( or ) <span>Shift + 9 or 0</span></li>
-<li>
-                                    Previous Answer <span>Shift + Enter</span>
-                                </li> */
-}

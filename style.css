@@ -4,7 +4,8 @@ html {
 
 body {
     height: 100vh;
-    display:     al    flex-direction: column;
+    display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
 }
@@ -33,10 +34,10 @@ small {
 }
 
 button {
-    height: 85px;
-    width: 85px;
+    height: 57px;
+    width: 57px;
     margin: 5px;
-    font-size: 1.7em;
+    font-size: 1.4em;
     font-weight: bold;
     color: #0077b6;
     border: 3px solid #0077b6;
@@ -104,15 +105,15 @@ button[value="(-)"]:hover {
 p {
     font-size: 2em;
     word-wrap: break-word;
-    width: 484px;
+    width: 380px;
     color: rgba(0, 0, 0, 0.5);
     text-align: center;
 }
 
 .calculator {
     box-sizing: border-box;
-    height: 800px;
-    width: 624px;
+    height: 700px;
+    width: 420px;
     display: flex;
     flex-direction: column;
     border: 2px solid rgba(0, 0, 0, 0.261);
@@ -123,8 +124,8 @@ p {
 
 .calc-upper-side {
     box-sizing: border-box;
-    height: 400px;
-    width: 620px;
+    height: 350px;
+    width: 416px;
     padding: 10px;
     display: flex;
     flex-direction: row-reverse;
@@ -137,15 +138,15 @@ p {
 
 .screen {
     box-sizing: border-box;
-    width: 620px;
+    width: 408px;
     display: flex;
     justify-content: center;
 }
 
 .calc-lower-side {
     box-sizing: border-box;
-    height: 400px;
-    width: 620px;
+    height: 350px;
+    width: 416px;
     padding: 5px;
     display: flex;
     flex-wrap: wrap;
@@ -166,14 +167,15 @@ svg {
     height: 30px;
     width: 30px;
     position: absolute;
+    top: 20px;
     border-radius: 50%;
-    box-shadow: 0px 0px 15px 2px rgba(227, 238, 82, 0.874);
+    box-shadow: none;
     background: #e3eeff;
-    transition: background 0.5s;
+    transition: box-shadow 0.5s;
 }
 
 svg:hover {
-    background: rgba(228, 238, 82, 0.5);
+    box-shadow: 0px 0px 15px 5px rgb(228, 238, 82);
     border-radius: 50%;
 }
 
@@ -185,19 +187,33 @@ svg:hover {
     justify-content: end;
 }
 
-h3 {
-    font-size: 1em;
-    font-weight: 400;
+.dropdown-info {
+    font-size: 1.4em;
+    width: 320px;
+    padding: 10px;
+    margin-top: 40px;
+    visibility: hidden;
+    position: absolute;
+    top: 20px;
+    left: -200px;
+    background-color: white;
+    border-radius: 30px;
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+    opacity: 0;
+    transition: visibility 0s, opacity 0.2s linear;
 }
 
-.dropdown h3 {
+.dropdown-info h3 {
     padding-bottom: 10px;
+    font-size: 1em;
     text-align: center;
     border-bottom: 1px solid rgba(0, 0, 0, 0.2);
 }
 
 .dropdown-info li {
     padding: 5px;
+    font-size: 0.8em;
 }
 
 .dropdown-info li:hover {
@@ -206,21 +222,6 @@ h3 {
 
 .dropdown-info h3:hover {
     background-color: white;
-}
-
-.dropdown-info {
-    font-size: 1.4em;
-    width: 400px;
-    padding: 10px;
-    margin-top: 40px;
-    visibility: hidden;
-    position: absolute;
-    background-color: white;
-    border-radius: 30px;
-    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
-    z-index: 1;
-    opacity: 0;
-    transition: visibility 0s, opacity 0.2s linear;
 }
 
 .dropdown:hover div:nth-child(2) {
@@ -240,10 +241,6 @@ h3 {
 }
 
 @media (max-width: 1020px) {
-    .info {
-        display: none;
-    }
-
     .calculator {
         height: 500px;
         width: 300px;
@@ -278,22 +275,11 @@ h3 {
 
     svg {
         visibility: hidden;
-   width: 296px;
     }
+}
 
-    button {
-        height: 45px;
-        width: 45px;
-        margin: 1px 1px;
-        font-size: 1em;
-    }
-
-    p {
-        width: 276px;
-        font-size: 1.2em;
-    }
-
-    svg {
-        visibility: hidden;
+@media (max-width: 500px) {
+    .info {
+        display: none;
     }
 }
